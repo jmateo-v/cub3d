@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:12:12 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/10 21:54:01 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/12 15:58:58 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,36 @@ static void init_frame(t_game *g)
         error_exit(ERR_IMG_TO_WIN);
     }
 }
+static void init_minimap(t_game *g)
+{
+    int mm_w;
+    int mm_h;
+
+    mm_w = g->map.width * MM_SCALE;
+    mm_h = g->map.height * MM_SCALE;
+    g->minimap = mlx_new_image(g->mlx, mm_w, mm_h);
+    if (!g->minimap)
+    {
+        cleanup(g);
+        error_exit(ERR_FRAME_INIT);
+    }
+    if (mlx_image_to_window(g->mlx, g->minimap, 20, 20) < 0)
+    {
+        cleanup(g);
+        error_exit(ERR_IMG_TO_WIN);
+    }
+}
 static void init_map(t_map *m)
 {
     static char *hardcoded_grid[] = {
         "1111111111",
         "1000000001",
-        "1000110001",
+        "1010000101",
+        "1010000101",
         "1000000001",
         "1000000001",
-        "1000000001",
-        "1000000001",
-        "1000000001",
+        "1010000101",
+        "1001111001",
         "1000000001",
         "1111111111",
         NULL
@@ -91,6 +110,7 @@ void    init_game(t_game *g)
     init_mlx(g);
     init_frame(g);
     init_map(&g->map);
+    init_minimap(g);
     init_textures(g);
     init_player(g);
 }

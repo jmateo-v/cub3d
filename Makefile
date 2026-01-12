@@ -27,20 +27,24 @@ SRC = src/main.c\
 	src/render/raycaster/ray_DDA.c\
 	src/render/raycaster/ray_wall.c\
 	src/render/raycaster/ray_draw.c\
+	src/render/minimap.c\
 	src/utils/error_handler.c\
-	src/utils/sec_utils.c\
+	src/utils/col_utils.c\
 	src/utils/cleanup.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 NAME = cub3d
 
-all: $(LIBFT) $(NAME)
+all: $(LIBFT) $(MLX_LIB) $(NAME) 
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(MLX_LIB) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+
+$(MLX_LIB):
+	cd $(MLX_DIR) && cmake -B build && cmake --build build -j4
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
@@ -55,6 +59,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -rf $(MLX_DIR)/build
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all

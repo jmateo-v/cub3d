@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:12:37 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/08 19:32:45 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/12 15:34:30 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	render_frame(t_game *g)
 	draw_ceiling(g);
 	draw_floor(g);
 	cast_rays(g);
+	draw_minimap(g);
 }

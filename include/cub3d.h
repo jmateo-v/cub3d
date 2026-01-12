@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/10 20:52:29 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/12 16:49:36 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 #define HEIGHT 600
 #define MOVE_SPEED 0.05
 #define ROTATE_SPEED 0.05
+#define PADDING 0.2
+#define MM_SCALE 12
+#define MM_WALL 0x44444455
+#define MM_FLOOR 0xAAAAAA55
+#define PLAYER_COLOR 0x00FFFF88
 
 // ERROR MESSAGES
 
@@ -76,6 +81,7 @@ typedef struct s_game
 {
     mlx_t *mlx;
     mlx_image_t *frame;
+    mlx_image_t *minimap;
     t_map map;
     t_player player;
     t_ray ray;
@@ -110,8 +116,10 @@ void compute_step_and_side_dist(t_game *g);
 void run_dda(t_game *g);
 void compute_wall_dist(t_game *g);
 void draw_wall_slice(t_game *g, int x);
+void	draw_minimap(t_game *g);
 void error_exit(const char *msg);
 bool is_bounded(t_game *g, int x, int y);
 void cleanup(t_game *g);
 void close_game(void *param);
+bool is_wall(t_game *g, double x, double y);
 #endif

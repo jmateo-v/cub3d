@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:17:27 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/10 20:55:16 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/12 15:52:16 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void cleanup(t_game *g)
     destroy_textures(g);
     if(g->frame)
         mlx_delete_image(g->mlx, g->frame);
+    if (g->minimap)
+        mlx_delete_image(g->mlx, g->minimap);
     if(g->mlx)
         mlx_terminate(g->mlx);
 }
