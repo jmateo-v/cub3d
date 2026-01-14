@@ -6,7 +6,7 @@
 /*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/12 16:49:36 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/14 17:14:03 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <float.h>
 #include "libft.h"
 #include "MLX42.h"
-#include "math.h"
+#include <math.h>
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -29,6 +30,8 @@
 #define MM_WALL 0x44444455
 #define MM_FLOOR 0xAAAAAA55
 #define PLAYER_COLOR 0x00FFFF88
+#define DOOR_SPEED 3.0f
+#define INTERACT_REACH 2.25f
 
 // ERROR MESSAGES
 
@@ -36,6 +39,7 @@
 #define ERR_FRAME_INIT "Error: failed to create frame buffer"
 #define ERR_IMG_TO_WIN "Error: failed to attach image to window"
 #define ERR_TEXTURE_INIT "Error: failed to load textures"
+#define ERR_DOOR_MALLOC "Error: malloc failed at init_doors"
 
 typedef struct s_map
 {
@@ -49,6 +53,15 @@ typedef struct s_map
     char    *tex_w;
     char    *tex_e;
 } t_map;
+
+typedef struct s_door
+{
+    int x;
+    int y;
+    bool open;
+    float prog;
+    float speed;
+} t_door;
 
 typedef struct s_player
 {
@@ -95,9 +108,13 @@ typedef struct s_game
     bool    key_d;
     bool    key_left;
     bool    key_right;
+    t_door  *doors;
+    int n_doors;
 }   t_game;
 
 void    init_game(t_game *g);
+void init_map(t_map *m);
+void init_doors(t_game *g);
 void    init_hooks(t_game *g);
 void handle_keys(mlx_key_data_t keydata, void *param);
 void game_loop(void *param);
@@ -107,6 +124,7 @@ void move_left(t_game *g);
 void move_right(t_game *g);
 void rotate_left(t_game *g);
 void rotate_right(t_game *g);
+void interact(t_game *g);
 void	render_frame(t_game *g);
 void cast_rays(t_game *g);
 void cast_single_ray(t_game *g, int x);
@@ -119,7 +137,9 @@ void draw_wall_slice(t_game *g, int x);
 void	draw_minimap(t_game *g);
 void error_exit(const char *msg);
 bool is_bounded(t_game *g, int x, int y);
+bool is_wall(t_game *g, double x, double y);
+bool is_door_closed(t_game *g, int x, int y);
 void cleanup(t_game *g);
 void close_game(void *param);
-bool is_wall(t_game *g, double x, double y);
+
 #endif

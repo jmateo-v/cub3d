@@ -13,11 +13,14 @@ OBJ_DIR = obj
 
 SRC = src/main.c\
 	src/init/init_game.c\
+	src/init/init_map.c\
+	src/init/init_doors.c\
 	src/input/init_hooks.c\
 	src/input/key_handler.c\
 	src/input/game_loop.c\
 	src/input/movement.c\
 	src/input/rotation.c\
+	src/input/interact.c\
 	src/render/render_frame.c\
 	src/render/raycaster/raycaster.c\
 	src/render/raycaster/ray_single.c\

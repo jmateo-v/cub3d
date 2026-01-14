@@ -6,7 +6,7 @@
 /*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 20:01:20 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/12 15:00:56 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/14 17:08:29 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,17 @@ bool is_wall(t_game *g, double x, double y)
     if (mx < 0 || my < 0 || my >= g->map.height || mx >= g->map.width)
         return 1;
     return(g->map.grid[my][mx] == '1');
+}
+bool is_door_closed(t_game *g, int x, int y)
+{
+    int i;
+
+    i = 0;
+    while (i < g->n_doors)
+    {
+        if (g->doors[i].x == x && g->doors[i].y == y)
+            return !g->doors[i].open;
+        i++;
+    }
+    return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:12:12 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/12 15:58:58 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:36:50 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,6 @@ static void init_minimap(t_game *g)
         error_exit(ERR_IMG_TO_WIN);
     }
 }
-static void init_map(t_map *m)
-{
-    static char *hardcoded_grid[] = {
-        "1111111111",
-        "1000000001",
-        "1010000101",
-        "1010000101",
-        "1000000001",
-        "1000000001",
-        "1010000101",
-        "1001111001",
-        "1000000001",
-        "1111111111",
-        NULL
-    };
-
-    m->grid = hardcoded_grid;
-
-    m->height = 0;
-    while (hardcoded_grid[m->height])
-        m->height++;
-
-    m->width = ft_strlen(hardcoded_grid[0]);
-
-    m->floor_color = 0xFF0000FF;
-    m->ceiling_color = 0xFFFFFFFF;
-
-    m->tex_n = "textures/placeholder.png";
-    m->tex_s = "textures/placeholder_S.png";
-    m->tex_w = "textures/placeholder_W.png";
-    m->tex_e = "textures/placeholder_E.png";
-}
 
 static void init_player(t_game *g)
 {
@@ -111,6 +79,7 @@ void    init_game(t_game *g)
     init_frame(g);
     init_map(&g->map);
     init_minimap(g);
+    init_doors(g);
     init_textures(g);
     init_player(g);
 }

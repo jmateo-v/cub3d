@@ -6,7 +6,7 @@
 /*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:17:27 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/12 15:52:16 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:42:02 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static void destroy_textures(t_game *g)
 void cleanup(t_game *g)
 {
     destroy_textures(g);
+    if (g->doors)
+    {
+        free(g->doors);
+        g->doors = NULL;
+        g->doors = 0;
+    }
     if(g->frame)
         mlx_delete_image(g->mlx, g->frame);
     if (g->minimap)
