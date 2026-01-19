@@ -6,61 +6,101 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:19:25 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/10 22:01:53 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/19 20:54:12 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void draw_wall_slice(t_game *g, int x)
+static void put_tex_pixel(t_game *g, mlx_texture_t *tex, int x, t_slice *s)
 {
-    int line_height = (int)(HEIGHT / g->ray.perp_wall_dist);
+    uint8_t *p;
+    uint32_t color;
 
-    int draw_start = -line_height / 2 + HEIGHT / 2;
-    if (draw_start < 0)
-        draw_start = 0;
+    p = tex->pixels + (s->tex_y * tex->width + s->tex_x) * 4;
+    color = (p[0] << 24) | (p[1] << 16) | (p[2] << 8) | p[3];
+    mlx_put_pixel(g->frame, x, s->start, color);
+}
 
-    int draw_end = line_height / 2 + HEIGHT / 2;
-    if (draw_end >= HEIGHT)
-        draw_end = HEIGHT - 1;
-    
-    mlx_texture_t *tex;
+static mlx_texture_t    *get_tex(t_game *g)
+{
+    if (g->ray.draw_door)
+        return (g->tex_d);
     if (g->ray.side == 0)
     {
         if (g->ray.step_x > 0)
-            tex = g->tex_e;
-        else
-            tex = g->tex_w;
+            return (g->tex_e);
+        return (g->tex_w);
     }
-    else
-    {
-        if (g->ray.step_y > 0)
-            tex = g->tex_s;
-        else
-            tex = g->tex_n;
-        
-    }
-    double wall_x;
-    if(g->ray.side == 0)
+    if (g->ray.step_y > 0)
+        return (g->tex_s);
+    return (g->tex_n);
+}
+
+static int  get_tex_x(t_game *g, mlx_texture_t *tex)
+{
+    double  wall_x;
+
+    if (g->ray.side == 0)
         wall_x = g->player.y + g->ray.perp_wall_dist * g->ray.dir_y;
     else
         wall_x = g->player.x + g->ray.perp_wall_dist * g->ray.dir_x;
     wall_x -= floor(wall_x);
-    int tex_x = (int)(wall_x * tex->width);
-    double step = (double)tex->height / line_height;
-    double tex_pos = (draw_start - HEIGHT / 2 + line_height / 2) * step;
-    for (int y = draw_start; y <= draw_end; y++)
+    return ((int)(wall_x * tex->width));
+}
+
+static void draw_tex_column(t_game *g, mlx_texture_t *tex, int x, t_slice *s)
+{
+    double  step;
+    double  tex_pos;
+
+    step = (double)tex->height / s->line_h;
+    tex_pos = (s->start - HEIGHT / 2 + s->line_h / 2) * step;
+    while (s->start <= s->end)
     {
-        int tex_y = (int)tex_pos;
+        s->tex_y = (int)tex_pos;
+        if (s->tex_y < 0)
+            s->tex_y = 0;
+        if (s->tex_y >= (int)tex->height)
+            s->tex_y = tex->height - 1;
         tex_pos += step;
-        if (tex_y < 0)
-            tex_y = 0;
-        if (tex_y >= (int)tex->height)
-            tex_y = tex->height - 1;
-        int i = (tex_y * tex->width + tex_x) * 4;
-        uint8_t *p = tex->pixels + i;
-        uint32_t color = (p[0] << 24 | p[1] << 16 | p[2] << 8 | p[3]);
-        mlx_put_pixel(g->frame, x, y, color);
+        put_tex_pixel(g, tex, x, s);
+        s->start++;
     }
 }
+
+void    draw_wall_slice(t_game *g, int x)
+{
+    int             line_h;
+    int             start;
+    int             end;
+    mlx_texture_t   *tex;
+    t_slice         s;
+
+    line_h = (int)(HEIGHT / g->ray.perp_wall_dist);
+    start = -line_h / 2 + HEIGHT / 2;
+    if (start < 0)
+        start = 0;
+    end = line_h / 2 + HEIGHT / 2;
+    if (end >= HEIGHT)
+        end = HEIGHT - 1;
+    tex = get_tex(g);
+    s.tex_x = get_tex_x(g, tex);
+    if (g->ray.draw_door)
+    {
+        start += (int)(line_h * g->doors[g->ray.door_index].prog);
+        if (start > end)
+            return;
+    }
+    s.start = start;
+    s.end = end;
+    s.line_h = line_h;
+    draw_tex_column(g, tex, x, &s);
+}
+
+
+
+
+
+
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/14 17:14:03 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/19 20:53:42 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 #define MM_WALL 0x44444455
 #define MM_FLOOR 0xAAAAAA55
 #define PLAYER_COLOR 0x00FFFF88
-#define DOOR_SPEED 3.0f
+#define DOOR_SPEED 4.5f
 #define INTERACT_REACH 2.25f
+#define DELTA_TIME 0.016f
 
 // ERROR MESSAGES
 
@@ -59,6 +60,7 @@ typedef struct s_door
     int x;
     int y;
     bool open;
+    int orientation;
     float prog;
     float speed;
 } t_door;
@@ -88,7 +90,20 @@ typedef struct s_ray
     bool hit;
     int side;
     double perp_wall_dist;
+    bool hit_door;
+    int door_index;
+    bool draw_door;
+    bool door_is_hit_tile;
 }   t_ray;
+typedef struct s_slice
+{
+    int start;
+    int end;
+    int tex_x;
+    int tex_y;
+    int line_h;
+}   t_slice;
+
 
 typedef struct s_game
 {
@@ -102,12 +117,7 @@ typedef struct s_game
     mlx_texture_t *tex_s;
     mlx_texture_t *tex_w;
     mlx_texture_t *tex_e;
-    bool    key_w;
-    bool    key_s;
-    bool    key_a;
-    bool    key_d;
-    bool    key_left;
-    bool    key_right;
+    mlx_texture_t *tex_d;
     t_door  *doors;
     int n_doors;
 }   t_game;
@@ -139,7 +149,9 @@ void error_exit(const char *msg);
 bool is_bounded(t_game *g, int x, int y);
 bool is_wall(t_game *g, double x, double y);
 bool is_door_closed(t_game *g, int x, int y);
+int find_door_index(t_game *g, int x, int y);
 void cleanup(t_game *g);
 void close_game(void *param);
+void update_doors(t_game *g, float dt);
 
 #endif

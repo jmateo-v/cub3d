@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:09:45 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/08 19:29:58 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/19 12:56:25 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void game_loop(void *param)
 {
     t_game *g = (t_game *)param;
-    //TODO: movement
+    update_doors(g, DELTA_TIME);
     render_frame(g);
 }

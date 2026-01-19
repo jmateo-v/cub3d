@@ -33,6 +33,7 @@ SRC = src/main.c\
 	src/render/minimap.c\
 	src/utils/error_handler.c\
 	src/utils/col_utils.c\
+	src/utils/door_utils.c\
 	src/utils/cleanup.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

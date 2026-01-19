@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_doors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:03:35 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/01/14 15:41:56 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/19 19:53:54 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,32 @@ static int count_doors(t_game *g)
 }
 static void fill_doors(t_game *g)
 {
-	int x;
-	int y;
-	
-	y = 0;
-	while(y < g->map.height)
-	{
-		x = 0;
-		while (x < g->map.width)
-		{
-			if (g->map.grid[y][x] == 'D')
-			{
-				g->doors[g->n_doors].x = x;
-				g->doors[g->n_doors].y = y;
-				g->doors[g->n_doors].open = false;
-				g->doors[g->n_doors].prog = 0.0f;
-				g->doors[g->n_doors].speed = DOOR_SPEED;
-				++g->n_doors;
-			}
-			x++;
-		}
-		y++;
-	}
+    int x;
+    int y;
+    
+    y = 0;
+    while (y < g->map.height)
+    {
+        x = 0;
+        while (x < g->map.width)
+        {
+            if (g->map.grid[y][x] == 'D')
+            {
+                g->doors[g->n_doors].x = x;
+                g->doors[g->n_doors].y = y;
+                g->doors[g->n_doors].open = false;
+                g->doors[g->n_doors].prog = 0.0f;
+                g->doors[g->n_doors].speed = DOOR_SPEED;
+
+                ++g->n_doors;
+            }
+            x++;
+        }
+        y++;
+    }
 }
+
+
 void init_doors(t_game *g)
 {
 	int count;

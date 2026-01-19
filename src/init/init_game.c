@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:12:12 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/14 15:36:50 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/19 14:28:47 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static void init_textures(t_game *g)
     g->tex_s = mlx_load_png(g->map.tex_s);
     g->tex_w = mlx_load_png(g->map.tex_w);
     g->tex_e = mlx_load_png(g->map.tex_e);
-    if (!g->tex_n || !g->tex_s || !g->tex_w || !g->tex_e)
+    g->tex_d = mlx_load_png("textures/door.png");
+    if (!g->tex_n || !g->tex_s || !g->tex_w || !g->tex_e || !g->tex_d)
         error_exit(ERR_TEXTURE_INIT);
 }
 void    init_game(t_game *g)

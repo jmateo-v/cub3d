@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:17:27 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/14 15:42:02 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:59:12 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void destroy_textures(t_game *g)
         mlx_delete_texture(g->tex_w);
     if (g->tex_e)
         mlx_delete_texture(g->tex_e);
+    if (g->tex_d)
+        mlx_delete_texture(g->tex_d);
 }
 void cleanup(t_game *g)
 {
