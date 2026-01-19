@@ -15,9 +15,7 @@
 int main(int argc, char **argv)
 {
     t_game game;
-    (void)argc;
-    (void)argv;
-    init_game(&game);
+    init_game(&game, argc, argv);
     init_hooks(&game);
     
     mlx_loop(game.mlx); //causes leaks, check at campus.

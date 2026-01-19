@@ -21,10 +21,3 @@ void compute_wall_dist(t_game *g)
 
     g->ray.draw_door = g->ray.door_is_hit_tile;
 }
-
-
-
-
-
-
-

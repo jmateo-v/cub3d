@@ -73,9 +73,10 @@ static void init_textures(t_game *g)
     if (!g->tex_n || !g->tex_s || !g->tex_w || !g->tex_e || !g->tex_d)
         error_exit(ERR_TEXTURE_INIT);
 }
-void    init_game(t_game *g)
+void    init_game(t_game *g, int argc, char **argv)
 {
     ft_memset(g, 0, sizeof(t_game));
+	parsing(g, argc, argv);
     init_mlx(g);
     init_frame(g);
     init_map(&g->map);

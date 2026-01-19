@@ -41,6 +41,7 @@
 #define ERR_IMG_TO_WIN "Error: failed to attach image to window"
 #define ERR_TEXTURE_INIT "Error: failed to load textures"
 #define ERR_DOOR_MALLOC "Error: malloc failed at init_doors"
+#define ERR_ARG_COUNT "Error: input only one argument (the map)"
 
 typedef struct s_map
 {
@@ -105,11 +106,26 @@ typedef struct s_slice
 }   t_slice;
 
 
+typedef struct	s_parse
+{
+	int	file_fd;
+	char	*copy_file;
+	char	**arr_file;
+	bool	no;
+	bool	so;
+	bool	we;
+	bool	ea;
+	bool	f;
+	bool	c;
+	bool	map;
+}	t_parse;
+
 typedef struct s_game
 {
     mlx_t *mlx;
     mlx_image_t *frame;
     mlx_image_t *minimap;
+	t_parse	parse;
     t_map map;
     t_player player;
     t_ray ray;
@@ -153,5 +169,9 @@ int find_door_index(t_game *g, int x, int y);
 void cleanup(t_game *g);
 void close_game(void *param);
 void update_doors(t_game *g, float dt);
+
+//PARSING
+
+
 
 #endif
