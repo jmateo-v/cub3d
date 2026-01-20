@@ -12,9 +12,65 @@
 
 #include "cub3d.h"
 
-void init_map(t_map *m)
+void	verify_line(t_game **g, char *line, int pos)
 {
-    static char *hardcoded_grid[] = {
+	int	i;
+
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	//SHOULD MAKE A CHANGE TO THIS CONDITION, CHECK NEXT CHAR FOR MATCH TOO.
+	//SO TO EACH ONE ADD && LINE[I + 1] && LINE[I + 1] == 'O/E/A'. THIS ALSO SIMPLIFIES FUNC.
+	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+		verify_texture(g, line, &i);
+	else if (line[i] == 'F' || line[i] == 'C')
+		verify_colors(g, line, &i);
+	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S'
+		|| line[i] == 'W' || line[i] == 'E' || line[i] == 'D')
+	{
+		verify_map(data, pos);
+		(*g)->parse->map = true;
+		return ;
+	}
+	else
+		error_exit(ERR_VALID_CHARS);
+}
+
+void	init_map(t_game *g)
+{
+	int	i;
+
+	i = 0;
+	while ((*game)->parse->arr_file[i])
+	{
+		verify_line(game, (*game)->parse->arr_file[i], i);
+		if ((*game)->parse->map == true)
+			break ;
+		i++;
+	}
+	/*
+	//THIS IS TO TEST IF EVERYTHING HAS BEEN COPIED PROPERLY, REMOVE LATER.
+    printf("\nPrinting values of colors and textures\n");
+    printf("RGB floor colors: %d %d %d\n",(*data)->map_values->floor_r,
+    (*data)->map_values->floor_g,(*data)->map_values->floor_b);
+    printf("RGB ceiling colors: %d %d %d\n",(*data)->map_values->ceiling_r,
+    (*data)->map_values->ceiling_g,(*data)->map_values->ceiling_b);
+    printf("Texture_no: %s\n",(*data)->map_values->texture_no);
+    printf("Texture_so: %s\n",(*data)->map_values->texture_so);
+    printf("Texture_ea: %s\n",(*data)->map_values->texture_ea);
+    printf("Texture_we: %s\n",(*data)->map_values->texture_we);
+    printf("\nPrinting vals of tmp_map: \n");
+    int     j = 0;
+    if (!(*data)->map_values->tmp_map || !(*data)->map_values->tmp_map[0])
+        return (printf("no map found\n"), 0);
+    while ((*data)->map_values->tmp_map[j])
+    {
+        printf("%s\n", (*data)->map_values->tmp_map[j]);
+        j++;
+    }
+    //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE LATER.
+    */
+	/*static char *hardcoded_grid[] = {
         "1111111111",
         "1000000001",
         "1010000101",
@@ -42,5 +98,6 @@ void init_map(t_map *m)
     m->tex_n = "textures/placeholder.png";
     m->tex_s = "textures/placeholder_S.png";
     m->tex_w = "textures/placeholder_W.png";
-    m->tex_e = "textures/placeholder_E.png";
+    m->tex_e = "textures/placeholder_E.png";*/
+	
 }

@@ -42,6 +42,8 @@
 #define ERR_TEXTURE_INIT "Error: failed to load textures"
 #define ERR_DOOR_MALLOC "Error: malloc failed at init_doors"
 #define ERR_ARG_COUNT "Error: input only one argument (the map)"
+#define ERR_VALID_MAP "Error: map must end in .cub and be accessible"
+#define ERR_VALID_CHARS "Error: invalid chars detected in file"
 
 typedef struct s_map
 {
@@ -109,7 +111,7 @@ typedef struct s_slice
 typedef struct	s_parse
 {
 	int	file_fd;
-	char	*copy_file;
+	//char	*copy_file;
 	char	**arr_file;
 	bool	no;
 	bool	so;
@@ -138,8 +140,8 @@ typedef struct s_game
     int n_doors;
 }   t_game;
 
-void    init_game(t_game *g);
-void init_map(t_map *m);
+void    init_game(t_game *g, int argc, char **argv);
+void init_map(t_game *g);
 void init_doors(t_game *g);
 void    init_hooks(t_game *g);
 void handle_keys(mlx_key_data_t keydata, void *param);

@@ -54,6 +54,7 @@ static void init_minimap(t_game *g)
 static void init_player(t_game *g)
 {
     //HARDCODED!!! SHOULD BE PARSED FROM .CUB
+	//(COMING SOON)
     g->player.x = 3.5;
     g->player.y = 3.5;
 
@@ -76,10 +77,10 @@ static void init_textures(t_game *g)
 void    init_game(t_game *g, int argc, char **argv)
 {
     ft_memset(g, 0, sizeof(t_game));
-	parsing(g, argc, argv);
+	initial_parsing(g, argc, argv);
     init_mlx(g);
     init_frame(g);
-    init_map(&g->map);
+    init_map(g);
     init_minimap(g);
     init_doors(g);
     init_textures(g);
