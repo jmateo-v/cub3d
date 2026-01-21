@@ -1,270 +1,274 @@
 #include "cub3d.h"
 
-//A NORM MESS, BUT FUNCTIONAL.
+//THIS FILE KILLED THE NORM, f for it.
 
-int     copy_tmp_map(t_map_data **data, int pos)
+//FOR TESTING PURPOSES, COPY_TMP_MAP COPIES TO THE GRID VARIABLE
+//INSIDE OF MAP STRUCT. HOWEVER, COPY_TMP_MAP DOESNT PRODUCE A FINAL
+//VERSION OF THE MAP, KEEP THIS IN MIND FOR THE FUTURE.
+
+void	copy_tmp_map(t_game *g, int pos)
 {
-        int     player_found;
-        int     i;
-        int     j;
-        int     len;
+	int	player_found;
+	int	i;
+	int	j;
+	int	len;
 
-        player_found = 0;
-        i = 0;
-        j = 0;
-        len = get_array_len((*data)->arr_file);
-        (*data)->map_values->tmp_map = (char **)ft_calloc(len - pos + 1, sizeof(char *));
-        if (!(*data)->map_values->tmp_map)
-                return (-1);
-        while (pos < len)
-        {
-                j = 0;
-                (*data)->map_values->tmp_map[i] = (char *)ft_calloc((ft_strlen((*data)->arr_file[pos]) + 1), sizeof(char));
-                if (!(*data)->map_values->tmp_map[i])
-                        return (-1);    //ALWAYS REMEMBER TO FREE ALL STRINGS OF TMP_MAP UNTIL THIS POINT, AND TMP_MAP ITSELF.
-                while ((*data)->arr_file[pos][j])
-                {
-                        if ((*data)->arr_file[pos][j] != 'N' && (*data)->arr_file[pos][j] != 'S'
-                                && (*data)->arr_file[pos][j] != 'W' && (*data)->arr_file[pos][j] != 'E'
-                                && (*data)->arr_file[pos][j] != '1' && (*data)->arr_file[pos][j] != '0'
-                                && (*data)->arr_file[pos][j] != 'N' && (*data)->arr_file[pos][j] != ' '
-                                && ((*data)->arr_file[pos][j] < 9 || (*data)->arr_file[pos][j] > 11))
-                                return (printf("Invalid chars found in map\n"), -1);    //FREE ALL STRINGS TMP_MAP AND ITSELF.
-                        else if ((*data)->arr_file[pos][j] == 'N' || (*data)->arr_file[pos][j] == 'S'
-                                || (*data)->arr_file[pos][j] == 'W' || (*data)->arr_file[pos][j] == 'E')
-                                player_found++;
-                        if (player_found > 1)
-                                return (printf("More than one player found\n"), -1);    //FREE ALL STRINGS TMP_MAP AND ITSELF.
-                        (*data)->map_values->tmp_map[i][j] = (*data)->arr_file[pos][j];
-                        j++;
-                }
-                i++;
-                pos++;
-        }
-        if (player_found == 0)
-                return (printf("No player character found\n"), -1);
-        return (0);
+	player_found = 0;
+	i = 0;
+	j = 0;
+	len = get_array_len(g->parse.arr_file);
+	//THIS TMP COPY OF MAP SHOULD BE ON THE PARSE STRUCT, NOT ON map.GRID
+	g->map.grid = (char **)ft_calloc(len - pos + 1, sizeof(char *));
+	if (!g->map.grid)
+		error_exit(ERR_MAP_MALLOC);
+	while (pos < len)
+	{
+		j = 0;
+		g->map.grid[i] = (char *)ft_calloc((ft_strlen(g->parse.arr_file[pos]) + 1), sizeof(char));
+		if (!g->map.grid[i])
+			error_exit(ERR_MAP_MALLOC);
+		while (g->parse.arr_file[pos][j])
+		{
+			//MOVE THIS TO AN AUX FUNCTION THAT CHECKS ALL MAP/PLAYER VALID VALUES PLS.
+			if (g->parse.arr_file[pos][j] != 'N' && g->parse.arr_file[pos][j] != 'S'
+				&& g->parse.arr_file[pos][j] != 'W' && g->parse.arr_file[pos][j] != 'E'
+				&& g->parse.arr_file[pos][j] != '1' && g->parse.arr_file[pos][j] != '0'
+				&& g->parse.arr_file[pos][j] != 'N' && !ft_isspace(g->parse.arr_file[pos][j])
+				&& g->parse.arr_file[pos][j] != 'D')
+				error_exit(ERR_VALID_MAP);
+			else if (g->parse.arr_file[pos][j] == 'N' || g->parse.arr_file[pos][j] == 'S'
+				|| g->parse.arr_file[pos][j] == 'W' || g->parse.arr_file[pos][j] == 'E')
+                player_found++;
+			if (player_found > 1)
+				error_exit(ERR_MORE_PLAYER);
+			g->map.grid[i][j] = g->parse.arr_file[pos][j];
+			j++;
+		}
+		i++;
+		pos++;
+	}
+	if (player_found == 0)
+		error_exit(ERR_NO_PLAYER);
 }
 
-int     verify_map(t_map_data **data, int pos)
+void	verify_map(t_game *g, int pos)
 {
-        if ((*data)->no == false || (*data)->so == false || (*data)->we == false
-                || (*data)->ea == false || (*data)->f == false || (*data)->c == false)
-                return (printf("Missing textures/colors\n"), -1);       //MISSING VALUES WHEN FIRST MAP CHARS FOUND.
-        if (copy_tmp_map(data, pos) == -1)
-                return (-1);    //EITHER WRONG VALUES OR MORE THAN ONE PLAYER FOUND IN MAP.
-        //TMP_MAP ALREADY STORED AND BASIC CHECKS DONE, NOW HAVE TO DO FLOODFILL AND
-        //CREATE THE FINAL VERSION OF THE MAP (THE ONE WITH CORNERS FIXED). DO THIS HERE:
-        return (0);
+	if (g->parse.no == false || g->parse.so == false || g->parse.we == false
+		|| g->parse.ea == false || g->parse.f == false || g->parse.c == false)
+		error_exit(ERR_MISSING_VALS);
+	copy_tmp_map(g, pos);
+	//TMP_MAP ALREADY STORED AND BASIC CHECKS DONE, NOW HAVE TO DO FLOODFILL AND
+	//CREATE THE FINAL VERSION OF THE MAP (THE ONE WITH CORNERS FIXED). DO THIS HERE:
 }
 
-int     save_cols(t_map_data **data, char *color, int *found, int location)
+void	save_colors(t_game *g, char *color, int *found, int location)
 {
-        int     *dst;
+	int	*dst;
 
-        dst = 0;
-        if (!color)
-                return (-1);
-        if (location == 1)
-                dst = &(*data)->map_values->floor_r;
-        else if (location == 2)
-                dst = &(*data)->map_values->ceiling_r;
-        if (dst == 0)
-                return (free(color), -1);
-        if (*found == 1)
-                dst++;
-        else if (*found == 2)
-                dst = dst + 2;
-        if (atoi_v2(color, dst) == -1)
-                return (free(color), -1);
-        return ((*found)++, free(color), 0);
+	dst = 0;
+	if (!color)
+		error_exit(ERR_VALID_COLOR);
+	if (location == 1)
+		dst = &g->parse.floor_r;
+	else if (location == 2)
+		dst = &g->parse.ceiling_r;
+	if (dst == 0)
+		error_exit(ERR_VALID_COLOR);
+	if (*found == 1)
+		dst++;
+	else if (*found == 2)
+		dst = dst + 2;
+	if (atoi_v2(color, dst) == -1)
+		error_exit(ERR_VALID_COLOR);
+    (*found)++;
+	free(color);
 }
 
-int     obtain_floor_colors(t_map_data **data, char *line, int *i)
+void	obtain_floor_colors(t_game *g, char *line, int *i)
 {
-        int     start;
-        int     found;
+	int	start;
+	int	found;
 
-        found = 0;
-        while (1)
-        {
-                if (line[*i] == '\0' && found == 3)
-                        break ;         //ALL 3 COLORS WERE FOUND AND SAVED PROPERLY, NOTHING ELSE IN STRING.
-                else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
-                        return (-1);    //MORE THAN ONE COMMA BETWEEN VALS OR MORE THAN 3 VALS, SO ERROR.
-                start = *i;
-                while (line[*i] && line[*i] != ',')
-                {
-                        //TRAILING SPACES ARE ONLY ACCEPTED ON THE LAST NUMBER, NOT ON THE OTHERS.
-                        if (found < 2 && (line[*i] < '0' || line[*i] > '9') && line[*i] != '+')
-                                return (-1);
-                        else if (found == 2 && (line[*i] < '0' || line[*i] > '9')
-                                && line[*i] != '+' && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (-1);
-                        (*i)++;
-                }
-                if (save_cols(data, ft_substr(line, start, *i - start), &found, 1) == -1)
-                        return (-1);
-                if (line[*i] != '\0')
-                        (*i)++;         //SKIPS THE CURRENT ',' AT THE LINE.
-        }
-        return ((*data)->f = true, 0);
+	found = 0;
+	while (1)
+	{
+		if (line[*i] == '\0' && found == 3)
+			break ;
+		else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
+			error_exit(ERR_VALID_COLOR);
+		start = *i;
+		while (line[*i] && line[*i] != ',')
+		{
+			if (found < 2 && (line[*i] < '0' || line[*i] > '9') && line[*i] != '+')
+				error_exit(ERR_VALID_COLOR);
+			else if (found == 2 && (line[*i] < '0' || line[*i] > '9')
+				&& line[*i] != '+' && !ft_isspace(line[*i]))
+				error_exit(ERR_VALID_COLOR);
+			(*i)++;
+		}
+		save_colors(g, ft_substr(line, start, *i - start), &found, 1);
+		if (line[*i] != '\0')
+			(*i)++;
+	}
+	g->parse.f = true;
 }
 
-int     obtain_ceiling_colors(t_map_data **data, char *line, int *i)
-{
-        int     start;
-        int     found;
+//MAKE SURE TO CONVERT COLORS AND SAVE THE RESULT TO THE MAP STRUCT BEFORE
+//EXITING THE OBTAIN COLORS FUNCTIONS, ALSO SAVE COLOR VALUES TO PARSE STRUCT INSTEAD OF MAP
 
-        found = 0;
-        while (1)
-        {
-                if (line[*i] == '\0' && found == 3)
-                        break ;         //ALL 3 COLORS WERE FOUND AND SAVED PROPERLY, NOTHING ELSE IN STRING.
-                else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
-                        return (-1);    //MORE THAN ONE COMMA BETWEEN VALS OR MORE THAN 3 VALS, SO ERROR.
-                start = *i;
-                while (line[*i] && line[*i] != ',')
-                {
-                        //TRAILING SPACES ARE ONLY ACCEPTED ON THE LAST NUMBER, NOT ON THE OTHERS.
-                        if (found < 2 && (line[*i] < '0' || line[*i] > '9') && line[*i] != '+')
-                                return (-1);
-                        else if (found == 2 && (line[*i] < '0' || line[*i] > '9')
-                                && line[*i] != '+' && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (-1);
-                        (*i)++;
-                }
-                if (save_cols(data, ft_substr(line, start, *i - start), &found, 2) == -1)
-                        return (-1);
-                if (line[*i] != '\0')
-                        (*i)++;         //SKIPS THE CURRENT ',' AT THE LINE.
-        }
-        return ((*data)->c = true, 0);
+//TRAILING SPACES ARE ONLY ACCEPTED ON THE LAST NUMBER, NOT ON OTHERS.
+
+void	obtain_ceiling_colors(t_game *g, char *line, int *i)
+{
+	int	start;
+	int	found;
+
+	found = 0;
+	while (1)
+	{
+		if (line[*i] == '\0' && found == 3)
+			break ;
+		else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
+			error_exit(ERR_VALID_COLOR);
+		start = *i;
+		while (line[*i] && line[*i] != ',')
+		{
+			if (found < 2 && (line[*i] < '0' || line[*i] > '9') && line[*i] != '+')
+                error_exit(ERR_VALID_COLOR);
+			else if (found == 2 && (line[*i] < '0' || line[*i] > '9')
+				&& line[*i] != '+' && !ft_isspace(line[*i]))
+				error_exit(ERR_VALID_COLOR);
+			(*i)++;
+		}
+		save_colors(g, ft_substr(line, start, *i - start), &found, 2);
+		if (line[*i] != '\0')
+			(*i)++;
+	}
+	g->parse.c = true;
 }
 
-int     verify_colors(t_map_data **data, char *line, int *i)
+void	verify_colors(t_game *g, char *line, int *i)
 {
-        if (line[*i] == 'F')
-        {
-                (*i)++;
-                if ((*data)->f == true || line[*i] == '\0')
-                        return (-1);
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                if (obtain_floor_colors(data, line, i) == -1)
-                        return (-1);
-                return (0);
-        }
-        else if (line[*i] == 'C')
-        {
-                (*i)++;
-                if ((*data)->c == true || line[*i] == '\0')
-                        return (-1);
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                if (obtain_ceiling_colors(data, line, i) == -1)
-                        return (-1);
-                return (0);
-        }
+	if (line[*i] == 'F')
+	{
+		(*i)++;
+		if (g->parse.f == true || line[*i] == '\0')
+			error_exit(ERR_NO_COLOR);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		obtain_floor_colors(g, line, i);
+		g->map.floor_color = ((uint32_t)g->parse.floor_r << 16)
+			| ((uint32_t)g->parse.floor_g << 8)
+			| (uint32_t)g->parse.floor_b;
+		printf("\n\nDEBUG PRINTF: value of floor_color: %X\n",g->map.floor_color);
+	}
+	else if (line[*i] == 'C')
+	{
+		(*i)++;
+		if (g->parse.c == true || line[*i] == '\0')
+			error_exit(ERR_NO_COLOR);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		obtain_ceiling_colors(g, line, i);
+		g->map.ceiling_color = ((uint32_t)g->parse.ceiling_r << 16)
+			| ((uint32_t)g->parse.ceiling_g << 8)
+			| (uint32_t)g->parse.ceiling_b;
+		printf("\n\nDEBUG PRINTF: value of ceiling_color: %X\n",g->map.ceiling_color);
+	}
 }
 
-int     verify_texture(t_map_data **data, char *line, int *i)
+void	verify_texture(t_game *g, char *line, int *i)
 {
-        int     start;
+	int	start;
 
-        start = 0;
-        if (line[*i] == 'N' && line[*i + 1] && line[*i + 1] == 'O')
-        {
-                *i = *i + 2;
-                if ((*data)->no == true || line[*i] == '\0')
-                        return (-1);
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                start = *i;
-                while (line[*i] && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                        (*i)++;
-                (*data)->map_values->texture_no = ft_substr(line, start, *i - start);
-                if (!(*data)->map_values->texture_no)
-                        return (-1);
-                while (line[*i])
-                {
-                        if (line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (free((*data)->map_values->texture_no), -1);
-                        (*i)++;
-                }
-                (*data)->no = true;
-                //printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_NO: %s\n",(*data)->map_values->texture_no);
-                return (0);
-        }
-        else if (line[*i] == 'S' && line[*i + 1] && line[*i + 1] == 'O')
-        {
-                *i = *i + 2;
-                if ((*data)->so == true || line[*i] == '\0')
-                        return (-1);
-
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                start = *i;
-                while (line[*i] && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                        (*i)++;
-                (*data)->map_values->texture_so = ft_substr(line, start, *i - start);
-                if (!(*data)->map_values->texture_so)
-                        return (-1);
-                while (line[*i])
-                {
-                        if (line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (free((*data)->map_values->texture_so), -1);
-                        (*i)++;
-                }
-                (*data)->so = true;
-                //printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_SO: %s\n",(*data)->map_values->texture_so);
-                return (0);
-        }
-        else if (line[*i] == 'E' && line[*i + 1] && line[*i + 1] == 'A')
-        {
-                *i = *i + 2;
-                if ((*data)->ea == true || line[*i] == '\0')
-                        return (-1);
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                start = *i;
-                while (line[*i] && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                        (*i)++;
-                (*data)->map_values->texture_ea = ft_substr(line, start, *i - start);
-                if (!(*data)->map_values->texture_ea)
-                        return (-1);
-                while (line[*i])
-                {
-                        if (line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (free((*data)->map_values->texture_ea), -1);
-                        (*i)++;
-                }
-                (*data)->ea = true;
-                //printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_EA: %s\n",(*data)->map_values->texture_ea);
-                return (0);
-        }
-        else if (line[*i] == 'W' && line[*i + 1] && line[*i + 1] == 'E')
-        {
-                *i = *i + 2;
-                if ((*data)->we == true || line[*i] == '\0')
-                        return (-1);
-                while (line[*i] && (line[*i] == ' ' || (line[*i] >= 9 && line[*i] <= 11)))
-                        (*i)++;
-                start = *i;
-                while (line[*i] && line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                        (*i)++;
-                (*data)->map_values->texture_we = ft_substr(line, start, *i - start);
-                if (!(*data)->map_values->texture_we)
-                        return (-1);
-                while (line[*i])
-                {
-                        if (line[*i] != ' ' && (line[*i] < 9 || line[*i] > 11))
-                                return (free((*data)->map_values->texture_we), -1);
-                        (*i)++;
-                }
-                (*data)->we = true;
-                //printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_WE: %s\n",(*data)->map_values->texture_we);
-                return (0);
-        }
-        return (-1);
+	start = 0;
+	if (line[*i] == 'N' && line[*i + 1] && line[*i + 1] == 'O')
+	{
+		*i = *i + 2;
+		if (g->parse.no == true || line[*i] == '\0')
+			error_exit(ERR_NO_TEXTURE);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		start = *i;
+		while (line[*i] && !ft_isspace(line[*i]))
+			(*i)++;
+		g->map.tex_n = ft_substr(line, start, *i - start);
+		if (!g->map.tex_n)
+			error_exit(ERR_TEXTURE_MALLOC);
+		while (line[*i])
+		{
+			if (!ft_isspace(line[*i]))
+				error_exit(ERR_VALID_TEXTURE);
+			(*i)++;
+		}
+		g->parse.no = true;
+		//printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_NO: %s\n",g->map.tex_n);
+	}
+	else if (line[*i] == 'S' && line[*i + 1] && line[*i + 1] == 'O')
+	{
+		*i = *i + 2;
+		if (g->parse.so == true || line[*i] == '\0')
+			error_exit(ERR_NO_TEXTURE);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		start = *i;
+		while (line[*i] && !ft_isspace(line[*i]))
+			(*i)++;
+		g->map.tex_s = ft_substr(line, start, *i - start);
+		if (!g->map.tex_s)
+			error_exit(ERR_TEXTURE_MALLOC);
+		while (line[*i])
+		{
+			if (!ft_isspace(line[*i]))
+				error_exit(ERR_VALID_TEXTURE);
+			(*i)++;
+		}
+		g->parse.so = true;
+		//printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_SO: %s\n",g->map.tex_s);
+	}
+	else if (line[*i] == 'E' && line[*i + 1] && line[*i + 1] == 'A')
+	{
+		*i = *i + 2;
+		if (g->parse.ea == true || line[*i] == '\0')
+			error_exit(ERR_NO_TEXTURE);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		start = *i;
+		while (line[*i] && !ft_isspace(line[*i]))
+			(*i)++;
+		g->map.tex_e = ft_substr(line, start, *i - start);
+		if (!g->map.tex_e)
+			error_exit(ERR_TEXTURE_MALLOC);
+		while (line[*i])
+		{
+			if (!ft_isspace(line[*i]))
+				error_exit(ERR_VALID_TEXTURE);
+			(*i)++;
+		}
+		g->parse.ea = true;
+		//printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_EA: %s\n",g->map.tex_e);
+	}
+	else if (line[*i] == 'W' && line[*i + 1] && line[*i + 1] == 'E')
+	{
+		*i = *i + 2;
+		if (g->parse.we == true || line[*i] == '\0')
+			error_exit(ERR_NO_TEXTURE);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
+		start = *i;
+		while (line[*i] && !ft_isspace(line[*i]))
+			(*i)++;
+		g->map.tex_w = ft_substr(line, start, *i - start);
+		if (!g->map.tex_w)
+			error_exit(ERR_TEXTURE_MALLOC);
+		while (line[*i])
+		{
+			if (!ft_isspace(line[*i]))
+				error_exit(ERR_VALID_TEXTURE);
+            (*i)++;
+		}
+		g->parse.we = true;
+		//printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_WE: %s\n",g->map.tex_w);
+	}
+	error_exit(ERR_VALID_CHARS);
 }

@@ -15,6 +15,9 @@ SRC = src/main.c\
 	src/init/init_game.c\
 	src/init/init_map.c\
 	src/init/init_doors.c\
+	src/parsing/initial_parsing.c\
+	src/parsing/parsing_utils.c\
+	src/parsing/verify_values.c\
 	src/input/init_hooks.c\
 	src/input/key_handler.c\
 	src/input/game_loop.c\

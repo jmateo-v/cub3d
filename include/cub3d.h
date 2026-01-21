@@ -18,8 +18,10 @@
 #include <stdio.h>
 #include <float.h>
 #include "libft.h"
+#include "get_next_line.h"
 #include "MLX42.h"
 #include <math.h>
+#include <fcntl.h>
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -42,8 +44,18 @@
 #define ERR_TEXTURE_INIT "Error: failed to load textures"
 #define ERR_DOOR_MALLOC "Error: malloc failed at init_doors"
 #define ERR_ARG_COUNT "Error: input only one argument (the map)"
-#define ERR_VALID_MAP "Error: map must end in .cub and be accessible"
+#define ERR_VALID_FILE "Error: map must end in .cub and be accessible"
 #define ERR_VALID_CHARS "Error: invalid chars detected in file"
+#define ERR_NO_TEXTURE "Error: empty or duplicated texture"
+#define ERR_TEXTURE_MALLOC "Error: malloc failed saving textures"
+#define ERR_VALID_TEXTURE "Error: invalid texture"
+#define ERR_NO_COLOR "Error: empty or duplicated color"
+#define ERR_VALID_COLOR "Error: invalid color"
+#define ERR_MAP_MALLOC "Error: malloc failed copying map"
+#define ERR_VALID_MAP "Error: invalid values detected in map"
+#define ERR_MORE_PLAYER "Error: more than one player found"
+#define ERR_NO_PLAYER "Error: no player character found"
+#define ERR_MISSING_VALS "Error: missing textures/colors"
 
 typedef struct s_map
 {
@@ -111,8 +123,13 @@ typedef struct s_slice
 typedef struct	s_parse
 {
 	int	file_fd;
-	//char	*copy_file;
 	char	**arr_file;
+	int	floor_r;
+	int	floor_g;
+	int	floor_b;
+	int	ceiling_r;
+	int	ceiling_g;
+	int	ceiling_b;
 	bool	no;
 	bool	so;
 	bool	we;
@@ -174,6 +191,19 @@ void update_doors(t_game *g, float dt);
 
 //PARSING
 
-
+void	initial_parsing(t_game *g, int argc, char **argv);
+int	copy_file(t_parse *parse);
+int	check_valid_file(char *str, t_parse *parse);
+void	init_parse(t_game *g);
+void	verify_line(t_game *g, char *line, int pos);
+void	verify_texture(t_game *g, char *line, int *i);
+void	verify_colors(t_game *g, char *line, int *i);
+void	verify_map(t_game *g, int pos);
+void	obtain_ceiling_colors(t_game *g, char *line, int *i);
+void	obtain_floor_colors(t_game *game, char *line, int *i);
+void	save_colors(t_game *g, char *color, int *found, int location);
+void	copy_tmp_map(t_game *g, int pos);
+int	get_array_len(char **array);
+int	atoi_v2(char *str, int *num);
 
 #endif

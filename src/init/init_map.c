@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	verify_line(t_game **g, char *line, int pos)
+void	verify_line(t_game *g, char *line, int pos)
 {
 	int	i;
 
@@ -28,8 +28,8 @@ void	verify_line(t_game **g, char *line, int pos)
 	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S'
 		|| line[i] == 'W' || line[i] == 'E' || line[i] == 'D')
 	{
-		verify_map(data, pos);
-		(*g)->parse->map = true;
+		verify_map(g, pos);
+		g->parse.map = true;
 		return ;
 	}
 	else
@@ -41,35 +41,38 @@ void	init_map(t_game *g)
 	int	i;
 
 	i = 0;
-	while ((*game)->parse->arr_file[i])
+	while (g->parse.arr_file[i])
 	{
-		verify_line(game, (*game)->parse->arr_file[i], i);
-		if ((*game)->parse->map == true)
+		verify_line(g, g->parse.arr_file[i], i);
+		if (g->parse.map == true)
 			break ;
 		i++;
 	}
-	/*
 	//THIS IS TO TEST IF EVERYTHING HAS BEEN COPIED PROPERLY, REMOVE LATER.
     printf("\nPrinting values of colors and textures\n");
-    printf("RGB floor colors: %d %d %d\n",(*data)->map_values->floor_r,
-    (*data)->map_values->floor_g,(*data)->map_values->floor_b);
-    printf("RGB ceiling colors: %d %d %d\n",(*data)->map_values->ceiling_r,
-    (*data)->map_values->ceiling_g,(*data)->map_values->ceiling_b);
-    printf("Texture_no: %s\n",(*data)->map_values->texture_no);
-    printf("Texture_so: %s\n",(*data)->map_values->texture_so);
-    printf("Texture_ea: %s\n",(*data)->map_values->texture_ea);
-    printf("Texture_we: %s\n",(*data)->map_values->texture_we);
+    printf("RGB floor colors: %d %d %d\n",g->parse.floor_r,
+    g->parse.floor_g, g->parse.floor_b);
+    printf("RGB ceiling colors: %d %d %d\n",g->parse.ceiling_r,
+    g->parse.ceiling_g, g->parse.ceiling_b);
+    printf("Texture_no: %s\n",g->map.tex_n);
+    printf("Texture_so: %s\n",g->map.tex_s);
+    printf("Texture_ea: %s\n",g->map.tex_e);
+    printf("Texture_we: %s\n",g->map.tex_w);
     printf("\nPrinting vals of tmp_map: \n");
     int     j = 0;
-    if (!(*data)->map_values->tmp_map || !(*data)->map_values->tmp_map[0])
-        return (printf("no map found\n"), 0);
-    while ((*data)->map_values->tmp_map[j])
+    if (!g->map.grid || !g->map.grid[0])
+        error_exit("no map found");
+    while (g->map.grid[j])
     {
-        printf("%s\n", (*data)->map_values->tmp_map[j]);
+        printf("%s\n", g->map.grid[j]);
         j++;
     }
     //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE LATER.
-    */
+    g->map.height = 0;
+    while (g->map.grid[g->map.height])
+        g->map.height++;
+	//THIS IS FOR TESTING PURPOSES, LIKELY NEEDS TO GET THE WIDTH OF LONGEST LINE.
+    g->map.width = ft_strlen(g->map.grid[0]);
 	/*static char *hardcoded_grid[] = {
         "1111111111",
         "1000000001",
