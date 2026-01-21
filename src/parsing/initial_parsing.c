@@ -25,6 +25,8 @@ int	check_valid_file(char *str, t_parse *parse)
 {
 	char	*tmp;
 
+	if (!str)
+		return (-1);
 	tmp = str;
 	while (*tmp && *tmp != '.')
 		++tmp;
@@ -50,7 +52,7 @@ int	copy_file(t_parse *parse)
 		line = get_next_line(parse->file_fd);
 		if (!line)
 			break ;
-		copy_file = ft_strjoin(copy_file, line);
+		copy_file = alt_strjoin(copy_file, line);
 		free(line);
 		if (!copy_file)
 			return (close(parse->file_fd), -1);
@@ -71,6 +73,7 @@ void	initial_parsing(t_game *g, int argc, char **argv)
 		error_exit(ERR_VALID_FILE);
 	if (copy_file(&g->parse) == -1)
 		error_exit("Error: inside copy_file");
+	/*
 	//DEBUG PRINTF, REMOVE LATER.
     printf("\n\nDEBUG PRINTF: PRINTING arr_file: \n");
     int     i = 0;
@@ -80,4 +83,5 @@ void	initial_parsing(t_game *g, int argc, char **argv)
 		i++;
     }
     //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE.
+	*/
 }

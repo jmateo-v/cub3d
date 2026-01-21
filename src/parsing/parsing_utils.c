@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int     atoi_v2(char *str, int *num)
+int     alt_atoi(char *str, int *num)
 {
         int     i;
 
@@ -20,6 +20,34 @@ int     atoi_v2(char *str, int *num)
         if (*num > 255)
                 return (-1);
         return (0);
+}
+
+char	*alt_strjoin(char const *s1, char const *s2)
+{
+	char	*dst;
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	j = 0;
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2));
+	else if (!s2)
+		return (ft_strdup(s1));
+	dst = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	if (!dst)
+		return (NULL);
+	while (s1[++i])
+		dst[i] = s1[i];
+	while (s2[j])
+	{
+		dst[i] = s2[j];
+		i++;
+		j++;
+	}
+	return (dst);
 }
 
 int     get_array_len(char **array)

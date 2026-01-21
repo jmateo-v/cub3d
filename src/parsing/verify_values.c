@@ -78,7 +78,7 @@ void	save_colors(t_game *g, char *color, int *found, int location)
 		dst++;
 	else if (*found == 2)
 		dst = dst + 2;
-	if (atoi_v2(color, dst) == -1)
+	if (alt_atoi(color, dst) == -1)
 		error_exit(ERR_VALID_COLOR);
     (*found)++;
 	free(color);
@@ -157,10 +157,11 @@ void	verify_colors(t_game *g, char *line, int *i)
 		while (line[*i] && ft_isspace(line[*i]))
 			(*i)++;
 		obtain_floor_colors(g, line, i);
-		g->map.floor_color = ((uint32_t)g->parse.floor_r << 16)
+		g->map.floor_color = ((uint32_t)0xFF << 24)
+			| ((uint32_t)g->parse.floor_b << 16)
 			| ((uint32_t)g->parse.floor_g << 8)
-			| (uint32_t)g->parse.floor_b;
-		printf("\n\nDEBUG PRINTF: value of floor_color: %X\n",g->map.floor_color);
+			| (uint32_t)g->parse.floor_r;
+		//printf("\n\nDEBUG PRINTF: value of floor_color: %X\n",g->map.floor_color);
 	}
 	else if (line[*i] == 'C')
 	{
@@ -170,10 +171,11 @@ void	verify_colors(t_game *g, char *line, int *i)
 		while (line[*i] && ft_isspace(line[*i]))
 			(*i)++;
 		obtain_ceiling_colors(g, line, i);
-		g->map.ceiling_color = ((uint32_t)g->parse.ceiling_r << 16)
+		g->map.ceiling_color = ((uint32_t)0xFF << 24)
+			| ((uint32_t)g->parse.ceiling_b << 16)
 			| ((uint32_t)g->parse.ceiling_g << 8)
-			| (uint32_t)g->parse.ceiling_b;
-		printf("\n\nDEBUG PRINTF: value of ceiling_color: %X\n",g->map.ceiling_color);
+			| (uint32_t)g->parse.ceiling_r;
+		//printf("\n\nDEBUG PRINTF: value of ceiling_color: %X\n",g->map.ceiling_color);
 	}
 }
 
@@ -270,5 +272,6 @@ void	verify_texture(t_game *g, char *line, int *i)
 		g->parse.we = true;
 		//printf("\n\nDEBUG PRINTF, VAL OF TEXTURE_WE: %s\n",g->map.tex_w);
 	}
-	error_exit(ERR_VALID_CHARS);
+	else
+		error_exit(ERR_VALID_CHARS);
 }

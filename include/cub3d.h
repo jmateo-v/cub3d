@@ -204,6 +204,7 @@ void	obtain_floor_colors(t_game *game, char *line, int *i);
 void	save_colors(t_game *g, char *color, int *found, int location);
 void	copy_tmp_map(t_game *g, int pos);
 int	get_array_len(char **array);
-int	atoi_v2(char *str, int *num);
+int	alt_atoi(char *str, int *num);
+char	*alt_strjoin(char const *s1, char const *s2);
 
 #endif
