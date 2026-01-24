@@ -158,7 +158,8 @@ typedef struct s_game
 }   t_game;
 
 void    init_game(t_game *g, int argc, char **argv);
-void init_map(t_game *g);
+void	init_map(t_game *g);
+void	init_player(t_game *g, int x, int y, int pos);
 void init_doors(t_game *g);
 void    init_hooks(t_game *g);
 void handle_keys(mlx_key_data_t keydata, void *param);

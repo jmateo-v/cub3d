@@ -51,19 +51,6 @@ static void init_minimap(t_game *g)
     }
 }
 
-static void init_player(t_game *g)
-{
-    //HARDCODED!!! SHOULD BE PARSED FROM .CUB
-	//(COMING SOON)
-    g->player.x = 3.5;
-    g->player.y = 3.5;
-
-    g->player.dir_x = -1.0;
-    g->player.dir_y = 0.0;
-
-    g->player.plane_x = 0.0;
-    g->player.plane_y = 0.66;
-}
 static void init_textures(t_game *g)
 {
     g->tex_n = mlx_load_png(g->map.tex_n);
@@ -78,11 +65,10 @@ void    init_game(t_game *g, int argc, char **argv)
 {
     ft_memset(g, 0, sizeof(t_game));
 	initial_parsing(g, argc, argv);
+    init_map(g);
     init_mlx(g);
     init_frame(g);
-    init_map(g);
     init_minimap(g);
     init_doors(g);
     init_textures(g);
-    init_player(g);
 }

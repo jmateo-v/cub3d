@@ -1,0 +1,67 @@
+1. MAPS ONLY NAMED '.CUB' ARE ACCEPTED, THIS IS LIKELY WRONG BUT IDK, EASY TO FIX.
+
+2. THERE'S PROBLEM WITH THE WIDTH OF THE MAP LINES, WHEN RENDERING, IF A LINE IS
+SHORTER THAN THE LONGEST LINE OF THE MAP, THERE'S A CHANCE THAT IT OVERFLOWS, AND RENDERS 
+THE START OF THE LINE AGAIN. THIS CAUSES MULTIPLE ISSUES, INVALID READS AND
+UNEXPECTED CHARACTERS ON THE MINIMAP. THIS CAN BE FIXED 2 DIFFERENT WAYS:
+
+THE FIRST IS BY REALLOCING EACH LINE BY THEIR LENGTH + (WIDTH - LENGTH), THEN
+FILLING THEM WITH 0 UNTIL NULL IS REACHED, FOR EVERY LINE OF THE MAP.
+THE SECOND ONE IS TO CHANGE THE RENDERING CONDITIONS, SO THAT RENDERING STOPS
+WHEN NULL IS REACHED FOR EACH LINE, THIS HOWEVER LEAVES THE MINIMAP CUT.
+FOR NOW THE SECOND SOLUTION IS USED, BUT RECONSIDER.
+
+3. IF A CHAR BELONGING TO A TEXTURE IS FOUND (NO/SO/WE/EA) IN THE MAP, THE ERROR
+OF MULTIPLE PLAYERS IS TRIGGERED INSTEAD OF THE ONE OF INVALID CHARS, THIS IS
+FIXABLE BUT A MINOR ISSUE.
+
+4. FREQUENT LEAKS ALL TIMES, UNDERSTANDABLE SINCE I DON'T CLEANUP THE PARSING STRUCTS YET.
+
+VALGRIND OUTPUT OF THE BIG_COMPLEX_MAP.CUB TEST IF THE WIDTH ISSUE ISN'T FIXED.
+
+==14193== Invalid read of size 1
+==14193==    at 0x10AF58: count_doors (init_doors.c:28)
+==14193==    by 0x10B124: init_doors (init_doors.c:68)
+==14193==    by 0x10ABFE: init_game (init_game.c:72)
+==14193==    by 0x10A891: main (main.c:18)
+==14193==  Address 0x4d6aa50 is 0 bytes after a block of size 48 alloc'd
+==14193==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14193==    by 0x122C97: ft_calloc (in /home/alineiro/cub3d_part2/goodcub/cub3d)
+==14193==    by 0x10BA1D: copy_tmp_map (verify_values.c:70)
+==14193==    by 0x10BDDC: verify_map (verify_values.c:105)
+==14193==    by 0x10ADC4: verify_line (init_map.c:31)
+==14193==    by 0x10AE3D: init_map (init_map.c:50)
+==14193==    by 0x10ABCE: init_game (init_game.c:68)
+==14193==    by 0x10A891: main (main.c:18)
+==14193==
+==14193== Invalid read of size 1
+==14193==    at 0x10AFCC: fill_doors (init_doors.c:47)
+==14193==    by 0x10B1AE: init_doors (init_doors.c:79)
+==14193==    by 0x10ABFE: init_game (init_game.c:72)
+==14193==    by 0x10A891: main (main.c:18)
+==14193==  Address 0x4d6aa50 is 0 bytes after a block of size 48 alloc'd
+==14193==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14193==    by 0x122C97: ft_calloc (in /home/alineiro/cub3d_part2/goodcub/cub3d)
+==14193==    by 0x10BA1D: copy_tmp_map (verify_values.c:70)
+==14193==    by 0x10BDDC: verify_map (verify_values.c:105)
+==14193==    by 0x10ADC4: verify_line (init_map.c:31)
+==14193==    by 0x10AE3D: init_map (init_map.c:50)
+==14193==    by 0x10ABCE: init_game (init_game.c:68)
+==14193==    by 0x10A891: main (main.c:18)
+==14193==
+==14193== Invalid read of size 1
+==14193==    at 0x10E912: draw_minimap (minimap.c:69)
+==14193==    by 0x10DB3F: render_frame (render_frame.c:60)
+==14193==    by 0x10CE85: game_loop (game_loop.c:19)
+==14193==    by 0x1106C8: mlx_loop (in /home/alineiro/cub3d_part2/goodcub/cub3d)
+==14193==    by 0x10A8AF: main (main.c:21)
+==14193==  Address 0x4d6aa50 is 0 bytes after a block of size 48 alloc'd
+==14193==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14193==    by 0x122C97: ft_calloc (in /home/alineiro/cub3d_part2/goodcub/cub3d)
+==14193==    by 0x10BA1D: copy_tmp_map (verify_values.c:70)
+==14193==    by 0x10BDDC: verify_map (verify_values.c:105)
+==14193==    by 0x10ADC4: verify_line (init_map.c:31)
+==14193==    by 0x10AE3D: init_map (init_map.c:50)
+==14193==    by 0x10ABCE: init_game (init_game.c:68)
+==14193==    by 0x10A891: main (main.c:18)
+==14193==

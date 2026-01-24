@@ -73,15 +73,4 @@ void	initial_parsing(t_game *g, int argc, char **argv)
 		error_exit(ERR_VALID_FILE);
 	if (copy_file(&g->parse) == -1)
 		error_exit("Error: inside copy_file");
-	/*
-	//DEBUG PRINTF, REMOVE LATER.
-    printf("\n\nDEBUG PRINTF: PRINTING arr_file: \n");
-    int     i = 0;
-    while (g->parse.arr_file[i])
-    {
-		printf("%s\n",g->parse.arr_file[i]);
-		i++;
-    }
-    //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE.
-	*/
 }

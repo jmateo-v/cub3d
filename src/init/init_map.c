@@ -19,14 +19,12 @@ void	verify_line(t_game *g, char *line, int pos)
 	i = 0;
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	//SHOULD MAKE A CHANGE TO THIS CONDITION, CHECK NEXT CHAR FOR MATCH TOO.
-	//SO TO EACH ONE ADD && LINE[I + 1] && LINE[I + 1] == 'O/E/A'. THIS ALSO SIMPLIFIES FUNC.
 	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
 		verify_texture(g, line, &i);
 	else if (line[i] == 'F' || line[i] == 'C')
 		verify_colors(g, line, &i);
-	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S'
-		|| line[i] == 'W' || line[i] == 'E' || line[i] == 'D')
+	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N'
+		|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E' || line[i] == 'D')
 	{
 		verify_map(g, pos);
 		g->parse.map = true;
@@ -82,7 +80,7 @@ void	init_map(t_game *g)
         error_exit("no map found");
     while (g->map.grid[j])
     {
-        printf("%s\n", g->map.grid[j]);
+        printf("'%s'\n", g->map.grid[j]);
         j++;
     }
     //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE LATER.

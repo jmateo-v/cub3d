@@ -1,0 +1,18 @@
+NO ./textures/placeholder.png
+SO ./textures/placeholder_S.png
+WE ./textures/placeholder_W.png
+EA ./textures/placeholder_E.png
+
+F 255,0,0
+C 255,255,255
+
+1111111111
+1000000001
+1010N00101
+1111110D0111111
+	11000000101
+111111000011111
+10100001011
+10011D1001
+1000000001
+1111111111

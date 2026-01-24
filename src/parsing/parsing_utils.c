@@ -1,25 +1,25 @@
 #include "cub3d.h"
 
-int     alt_atoi(char *str, int *num)
+int	alt_atoi(char *str, int *num)
 {
-        int     i;
+	int	i;
 
-        i = 0;
-        if (!str)
-                return (-1);
-        if (str[i] == '+')
-                i++;
-        if (str[i] < '0' || str[i] > '9')
-                return (-1);
-        while (str[i] >= '0' && str[i] <= '9' && str[i])
-                *num = (*num * 10) + (str[i++] - '0');
-        while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 11)))
-                i++;
-        if (str[i] != '\0')
-                return (-1);
-        if (*num > 255)
-                return (-1);
-        return (0);
+	i = 0;
+	if (!str)
+		return (-1);
+	if (str[i] == '+')
+		i++;
+	if (str[i] < '0' || str[i] > '9')
+		return (-1);
+	while (str[i] >= '0' && str[i] <= '9' && str[i])
+		*num = (*num * 10) + (str[i++] - '0');
+	while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 11)))
+		i++;
+	if (str[i] != '\0')
+		return (-1);
+	if (*num > 255)
+		return (-1);
+	return (0);
 }
 
 char	*alt_strjoin(char const *s1, char const *s2)
@@ -50,14 +50,14 @@ char	*alt_strjoin(char const *s1, char const *s2)
 	return (dst);
 }
 
-int     get_array_len(char **array)
+int	get_array_len(char **array)
 {
-        int     len;
+	int	len;
 
-        len = 0;
-        if (!array || !array[0])
-                return (0);
-        while (array[len])
-                len++;
-        return (len);
+	len = 0;
+	if (!array || !array[0])
+		return (0);
+	while (array[len])
+		len++;
+	return (len);
 }

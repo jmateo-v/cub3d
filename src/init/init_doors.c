@@ -20,10 +20,10 @@ static int count_doors(t_game *g)
 
 	count = 0;
 	y = 0;
-	while(y < g->map.height)
+	while(y < g->map.height && g->map.grid[y])
 	{
 		x = 0;
-		while (x < g->map.width)
+		while (x < g->map.width && g->map.grid[y][x])
 		{
 			if (g->map.grid[y][x] == 'D')
 				++count;
@@ -39,10 +39,10 @@ static void fill_doors(t_game *g)
     int y;
     
     y = 0;
-    while (y < g->map.height)
+    while (y < g->map.height && g->map.grid[y])
     {
         x = 0;
-        while (x < g->map.width)
+        while (x < g->map.width && g->map.grid[y][x])
         {
             if (g->map.grid[y][x] == 'D')
             {
