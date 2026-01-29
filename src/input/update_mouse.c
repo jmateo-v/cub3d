@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_loop.c                                        :+:      :+:    :+:   */
+/*   update_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 19:09:45 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/29 12:43:24 by dogs             ###   ########.fr       */
+/*   Created: 2026/01/29 12:17:04 by dogs              #+#    #+#             */
+/*   Updated: 2026/01/29 13:21:30 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void game_loop(void *param)
+void update_mouse(t_game *g)
 {
-    t_game *g = (t_game *)param;
-    update_mouse(g);
-    update_doors(g, DELTA_TIME);
-    render_frame(g);
+    int32_t mx; 
+    int32_t my;
+    int32_t delta_x;
+    mlx_get_mouse_pos(g->mlx, &mx, &my);
+
+    if (mx >= 0 && mx < g->mlx->width && my >= 0 && my < g->mlx->height)
+    {
+        delta_x = mx - g->last_mouse_x;
+
+        if (delta_x != 0)
+            rotate_camera(g, delta_x * -MOUSE_ROT_SPEED);
+    }
+    mlx_set_mouse_pos(g->mlx, mx, my);
+    g->last_mouse_x = mx;
 }
+
+
+

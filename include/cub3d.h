@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/19 20:53:42 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/29 13:19:23 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 #define HEIGHT 600
 #define MOVE_SPEED 0.05
 #define ROTATE_SPEED 0.05
+#define MOUSE_ROT_SPEED 0.025
 #define PADDING 0.2
 #define MM_SCALE 12
 #define MM_WALL 0x44444455
 #define MM_FLOOR 0xAAAAAA55
+#define MM_DOOR 0xFFD70055
 #define PLAYER_COLOR 0x00FFFF88
 #define DOOR_SPEED 4.5f
 #define INTERACT_REACH 2.25f
@@ -155,6 +157,7 @@ typedef struct s_game
     mlx_texture_t *tex_d;
     t_door  *doors;
     int n_doors;
+    int last_mouse_x;
 }   t_game;
 
 void    init_game(t_game *g, int argc, char **argv);
@@ -168,8 +171,7 @@ void move_foward(t_game *g);
 void move_backwards(t_game *g);
 void move_left(t_game *g);
 void move_right(t_game *g);
-void rotate_left(t_game *g);
-void rotate_right(t_game *g);
+void rotate_camera(t_game *g, double angle);
 void interact(t_game *g);
 void	render_frame(t_game *g);
 void cast_rays(t_game *g);
@@ -189,6 +191,7 @@ int find_door_index(t_game *g, int x, int y);
 void cleanup(t_game *g);
 void close_game(void *param);
 void update_doors(t_game *g, float dt);
+void update_mouse(t_game *g);
 
 //PARSING
 

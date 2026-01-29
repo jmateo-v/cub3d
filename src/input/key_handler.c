@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:56:54 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/14 16:56:05 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/29 12:41:48 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void handle_movement(t_game *g, keys_t key)
     if (key == MLX_KEY_D)
         move_right(g); 
     if (key == MLX_KEY_LEFT)
-        rotate_left(g);
+        rotate_camera(g, ROTATE_SPEED);
     if (key == MLX_KEY_RIGHT)
-        rotate_right(g);
+        rotate_camera(g, -ROTATE_SPEED);
 }
 void handle_keys(mlx_key_data_t keydata, void *param)
 {

@@ -26,6 +26,7 @@ SRC = src/main.c\
 	src/input/movement.c\
 	src/input/rotation.c\
 	src/input/interact.c\
+	src/input/update_mouse.c\
 	src/render/render_frame.c\
 	src/render/raycaster/raycaster.c\
 	src/render/raycaster/ray_single.c\

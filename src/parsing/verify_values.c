@@ -19,12 +19,12 @@ void	init_player(t_game *g, int x, int y, int pos)
 	if (g->parse.arr_file[pos][x] == 'N')
 	{
 		g->player.dir_y = -1.0;
-		g->player.plane_x = 0.66;
+		g->player.plane_x = -0.66;
 	}
 	else if (g->parse.arr_file[pos][x] == 'S')
 	{
 		g->player.dir_y = 1.0;
-		g->player.plane_x = -0.66;
+		g->player.plane_x = 0.66;
 	}
 	else if (g->parse.arr_file[pos][x] == 'W')
 	{

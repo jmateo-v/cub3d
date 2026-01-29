@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:12:12 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/19 14:28:47 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/29 13:16:37 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void    init_game(t_game *g, int argc, char **argv)
     init_minimap(g);
     init_doors(g);
     init_textures(g);
+    g->last_mouse_x = -1;
 }

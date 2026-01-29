@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:02:27 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/01/14 14:54:23 by jmateo-v         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:48:24 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ void	draw_minimap(t_game *g)
 		{
 			if (g->map.grid[y][x] == '1')
 				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_WALL);
-			else
+			else if(g->map.grid[y][x] == 'D')
+				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_DOOR);
+			else if(g->map.grid[y][x] == '0'|| g->map.grid[y][x] == 'N'
+			|| g->map.grid[y][x] == 'W' || g->map.grid[y][x] == 'S'
+			|| g->map.grid[y][x] == 'E')
 				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_FLOOR);
 			x++;
 		}
