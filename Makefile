@@ -15,6 +15,8 @@ SRC = src/main.c\
 	src/init/init_game.c\
 	src/init/init_map.c\
 	src/init/init_doors.c\
+	src/init/init_anim.c\
+	src/init/init_sprites.c\
 	src/parsing/initial_parsing.c\
 	src/parsing/parsing_utils.c\
 	src/parsing/verify_values.c\
@@ -37,6 +39,8 @@ SRC = src/main.c\
 	src/render/raycaster/ray_wall.c\
 	src/render/raycaster/ray_draw.c\
 	src/render/minimap.c\
+	src/render/sprite.c\
+	src/render/render_sprite.c\
 	src/utils/error_handler.c\
 	src/utils/col_utils.c\
 	src/utils/door_utils.c\

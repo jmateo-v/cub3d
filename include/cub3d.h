@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/29 13:19:23 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/31 15:54:43 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@
 
 // ERROR MESSAGES
 
-#define ERR_MLX_INIT "Error failed to initialize MLX"
+#define ERR_MLX_INIT "Error: failed to initialize MLX"
 #define ERR_FRAME_INIT "Error: failed to create frame buffer"
 #define ERR_IMG_TO_WIN "Error: failed to attach image to window"
 #define ERR_TEXTURE_INIT "Error: failed to load textures"
 #define ERR_DOOR_MALLOC "Error: malloc failed at init_doors"
+#define ERR_SPRITE_MALLOC "Error: malloc failed at init_sprites"
 #define ERR_ARG_COUNT "Error: input only one argument (the map)"
 #define ERR_VALID_FILE "Error: map must end in .cub and be accessible"
 #define ERR_VALID_CHARS "Error: invalid chars detected in file"
@@ -112,6 +113,7 @@ typedef struct s_ray
     bool draw_door;
     bool door_is_hit_tile;
 }   t_ray;
+
 typedef struct s_slice
 {
     int start;
@@ -120,6 +122,33 @@ typedef struct s_slice
     int tex_y;
     int line_h;
 }   t_slice;
+
+typedef struct s_anim
+{
+    mlx_image_t *frames[5];
+    int frame_count;
+    int current;
+    int timer;
+}   t_anim;
+
+typedef struct s_sprite
+{
+    int x;
+    int y;
+    t_anim anim;
+} t_sprite;
+
+typedef struct s_sprctx
+{
+    int         i;
+    t_sprite    *s;
+    t_anim      *a;
+    double      tx;
+    double      ty;
+    int         dx;
+    int         dy;
+    mlx_image_t *img;
+}   t_sprctx;
 
 
 typedef struct	s_parse
@@ -158,6 +187,8 @@ typedef struct s_game
     t_door  *doors;
     int n_doors;
     int last_mouse_x;
+    t_sprite *sprites;
+    int n_sprites;
 }   t_game;
 
 void    init_game(t_game *g, int argc, char **argv);
@@ -192,6 +223,10 @@ void cleanup(t_game *g);
 void close_game(void *param);
 void update_doors(t_game *g, float dt);
 void update_mouse(t_game *g);
+void init_anim(mlx_t *mlx, t_anim *anim);
+void init_sprites(t_game *g);
+void anim_sprites(t_game *g);
+void render_sprites(t_game *g);
 
 //PARSING
 

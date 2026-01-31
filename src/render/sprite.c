@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_loop.c                                        :+:      :+:    :+:   */
+/*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 19:09:45 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/31 15:21:46 by dogs             ###   ########.fr       */
+/*   Created: 2026/01/31 15:13:31 by dogs              #+#    #+#             */
+/*   Updated: 2026/01/31 15:16:05 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void game_loop(void *param)
+static void update_anim(t_anim *anim)
 {
-    t_game *g = (t_game *)param;
-    update_mouse(g);
-    update_doors(g, DELTA_TIME);
-    anim_sprites(g);
-    render_frame(g);
-    render_sprites(g);
+    anim->timer++;
+
+    if (anim->timer >= 8)
+    {
+        anim->current = (anim->current + 1) % anim->frame_count;
+        anim->timer = 0;
+    }
+}
+void anim_sprites(t_game *g)
+{
+    int i;
+    i = 0;
+
+    while(i < g->n_sprites)
+    {
+        update_anim(&g->sprites[i].anim);
+        i++;
+    }
 }

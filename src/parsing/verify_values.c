@@ -66,7 +66,7 @@ void	copy_tmp_map(t_game *g, int pos)
 				&& g->parse.arr_file[pos][j] != 'W' && g->parse.arr_file[pos][j] != 'E'
 				&& g->parse.arr_file[pos][j] != '1' && g->parse.arr_file[pos][j] != '0'
 				&& g->parse.arr_file[pos][j] != 'N' && g->parse.arr_file[pos][j] != ' '
-				&& g->parse.arr_file[pos][j] != 'D')
+				&& g->parse.arr_file[pos][j] != 'D'&& g->parse.arr_file[pos][j] != 'X')
 				error_exit(ERR_VALID_MAP);
 			else if (g->parse.arr_file[pos][j] == 'N' || g->parse.arr_file[pos][j] == 'S'
 				|| g->parse.arr_file[pos][j] == 'W' || g->parse.arr_file[pos][j] == 'E')

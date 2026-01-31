@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:17:27 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/19 13:59:12 by dogs             ###   ########.fr       */
+/*   Updated: 2026/01/31 15:05:30 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,41 @@ static void destroy_textures(t_game *g)
     if (g->tex_d)
         mlx_delete_texture(g->tex_d);
 }
+void destroy_anim(mlx_t *mlx, t_anim *anim)
+{
+    int i;
+     
+    i = 0;
+    while (i < anim->frame_count)
+    {
+        if (anim->frames[i])
+            mlx_delete_image(mlx, anim->frames[i]);
+        i++;
+    }
+}
+static void destroy_sprites(t_game *g)
+{
+    int i;
+
+    if (!g->sprites)
+        return;
+
+    i = 0;
+    while (i < g->n_sprites)
+    {
+        destroy_anim(g->mlx, &g->sprites[i].anim);
+        i++;
+    }
+    free(g->sprites);
+    g->sprites = NULL;
+    g->n_sprites = 0;
+}
+
+
 void cleanup(t_game *g)
 {
     destroy_textures(g);
+    destroy_sprites(g);
     if (g->doors)
     {
         free(g->doors);
