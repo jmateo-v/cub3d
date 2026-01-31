@@ -39,26 +39,13 @@ void	verify_line(t_game *g, char *line, int pos)
 void	init_map(t_game *g)
 {
 	int	i;
-	int	width;
 
 	i = 0;
-	width = 0;
 	while (g->parse.arr_file[i])
 	{
 		verify_line(g, g->parse.arr_file[i], i);
 		if (g->parse.map == true)
 			break ;
-		i++;
-	}
-	i = 0;
-	g->map.height = 0;
-	while (g->map.grid[g->map.height])
-		g->map.height++;
-	while (g->map.grid[i])
-	{
-		width = ft_strlen(g->map.grid[i]);
-		if (width > g->map.width)
-			g->map.width = width;
 		i++;
 	}
 	/*

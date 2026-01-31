@@ -59,6 +59,7 @@
 #define ERR_MORE_PLAYER "Error: more than one player found"
 #define ERR_NO_PLAYER "Error: no player character found"
 #define ERR_MISSING_VALS "Error: missing textures/colors"
+#define ERR_MAP_OPEN "Error: map not surrounded by walls"
 
 typedef struct s_map
 {
