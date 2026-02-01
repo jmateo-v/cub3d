@@ -47,6 +47,7 @@ char	*alt_strjoin(char const *s1, char const *s2)
 		i++;
 		j++;
 	}
+	free((char *)s1);
 	return (dst);
 }
 

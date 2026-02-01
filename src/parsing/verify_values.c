@@ -12,6 +12,19 @@
 //MLX STRUCT IS INITIALIZED AND NOT FREED, TO FIX THIS, CLEANUP THE
 //STRUCT BEFORE CALLING ERROR_EXIT FUNCTION.
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	init_player(t_game *g, int x, int y, int pos)
 {
 	g->player.x = (double)x + 0.5;
@@ -160,6 +173,7 @@ void	verify_map(t_game *g, int pos)
 			g->map.width = width;
 		i++;
 	}
+	free_array(g->parse.arr_file);
 	flood_map = copy_flood_map(g);
 	if (!flood_map)
 		error_exit(ERR_MAP_MALLOC);
@@ -175,4 +189,5 @@ void	verify_map(t_game *g, int pos)
 	}
 	//REMOVE TEST PRINTF ABOVE.
 	*/
+	free_array(flood_map);
 }

@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 19:17:27 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/31 15:05:30 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/01 20:50:52 by adrlinei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void cleanup(t_game *g)
         mlx_delete_image(g->mlx, g->minimap);
     if(g->mlx)
         mlx_terminate(g->mlx);
+     if (g->map.grid)
+	free_array(g->map.grid);
 }
 void close_game(void *param)
 {

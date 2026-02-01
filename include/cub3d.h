@@ -6,7 +6,7 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/31 15:54:43 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/01 20:51:39 by adrlinei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ void render_sprites(t_game *g);
 
 //PARSING
 
+void	free_array(char **array);
 void	initial_parsing(t_game *g, int argc, char **argv);
 int	copy_file(t_parse *parse);
 int	check_valid_file(char *str, t_parse *parse);
