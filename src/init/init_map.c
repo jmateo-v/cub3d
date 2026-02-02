@@ -12,6 +12,32 @@
 
 #include "cub3d.h"
 
+void	init_player(t_game *g, int x, int y, int pos)
+{
+	g->player.x = (double)x + 0.5;
+	g->player.y = (double)y + 0.5;
+	if (g->parse.arr_file[pos][x] == 'N')
+	{
+		g->player.dir_y = -1.0;
+		g->player.plane_x = -0.66;
+	}
+	else if (g->parse.arr_file[pos][x] == 'S')
+	{
+		g->player.dir_y = 1.0;
+		g->player.plane_x = 0.66;
+	}
+	else if (g->parse.arr_file[pos][x] == 'W')
+	{
+		g->player.dir_x = -1.0;
+		g->player.plane_y = 0.66;
+	}
+	else if (g->parse.arr_file[pos][x] == 'E')
+	{
+		g->player.dir_x = 1.0;
+		g->player.plane_y = -0.66;
+	}
+}
+
 void	verify_line(t_game *g, char *line, int pos)
 {
 	int	i;
@@ -34,8 +60,6 @@ void	verify_line(t_game *g, char *line, int pos)
 		error_exit(ERR_VALID_CHARS);
 }
 
-//MAYBE INIT VARIABLES OF MAP STRUCT FOR SAFETY PURPOSES.
-
 void	init_map(t_game *g)
 {
 	int	i;
@@ -48,28 +72,4 @@ void	init_map(t_game *g)
 			break ;
 		i++;
 	}
-	/*
-	//THIS IS TO TEST IF EVERYTHING HAS BEEN COPIED PROPERLY, REMOVE LATER.
-    printf("\nPrinting values of colors and textures\n");
-    printf("RGB floor colors: %d %d %d\n",g->parse.floor_r,
-    g->parse.floor_g, g->parse.floor_b);
-    printf("RGB ceiling colors: %d %d %d\n",g->parse.ceiling_r,
-    g->parse.ceiling_g, g->parse.ceiling_b);
-    printf("Texture_no: %s\n",g->map.tex_n);
-    printf("Texture_so: %s\n",g->map.tex_s);
-    printf("Texture_ea: %s\n",g->map.tex_e);
-    printf("Texture_we: %s\n",g->map.tex_w);
-	printf("Val of height: %d\n",g->map.height);
-	printf("Val of width: %d\n",g->map.width);
-    printf("\nPrinting vals of tmp_map: \n");
-    int     j = 0;
-    if (!g->map.grid || !g->map.grid[0])
-        error_exit("no map found");
-    while (g->map.grid[j])
-    {
-        printf("'%s'\n", g->map.grid[j]);
-        j++;
-    }
-    //EVERYTHING ABOVE ARE TEST PRINTFS, REMOVE LATER.
-	*/
 }

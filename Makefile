@@ -19,7 +19,7 @@ SRC = src/main.c\
 	src/init/init_sprites.c\
 	src/parsing/initial_parsing.c\
 	src/parsing/parsing_utils.c\
-	src/parsing/verify_values.c\
+	src/parsing/verify_map.c\
 	src/parsing/verify_textures.c\
 	src/parsing/verify_colors.c\
 	src/input/init_hooks.c\

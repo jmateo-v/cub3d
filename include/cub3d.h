@@ -156,6 +156,7 @@ typedef struct	s_parse
 {
 	int	file_fd;
 	char	**arr_file;
+	int	player_found;
 	int	floor_r;
 	int	floor_g;
 	int	floor_b;
@@ -236,6 +237,7 @@ void	initial_parsing(t_game *g, int argc, char **argv);
 int	copy_file(t_parse *parse);
 int	check_valid_file(char *str, t_parse *parse);
 void	init_parse(t_game *g);
+void	init_player(t_game *g, int x, int y, int pos);
 void	verify_line(t_game *g, char *line, int pos);
 void	verify_texture(t_game *g, char *line, int *i);
 void	verify_colors(t_game *g, char *line, int *i);
@@ -243,7 +245,8 @@ void	verify_map(t_game *g, int pos);
 void	obtain_ceiling_colors(t_game *g, char *line, int *i);
 void	obtain_floor_colors(t_game *game, char *line, int *i);
 void	save_colors(t_game *g, char *color, int *found, int location);
-void	copy_tmp_map(t_game *g, int pos);
+void	copy_line(t_game *g, int pos, int i);
+void	copy_map(t_game *g, int pos);
 int	get_array_len(char **array);
 int	alt_atoi(char *str, int *num);
 char	*alt_strjoin(char const *s1, char const *s2);

@@ -52,8 +52,6 @@ void	obtain_floor_colors(t_game *g, char *line, int *i)
 	g->parse.f = true;
 }
 
-//TRAILING SPACES ARE ONLY ACCEPTED ON THE LAST NUMBER, NOT ON OTHERS.
-
 void	obtain_ceiling_colors(t_game *g, char *line, int *i)
 {
 	int	start;

@@ -1,5 +1,24 @@
 #include "cub3d.h"
 
+void	init_player_map(t_game *g)
+{
+	g->player.x = 0.0;
+	g->player.y = 0.0;
+	g->player.dir_x = 0.0;
+	g->player.dir_y = 0.0;
+	g->player.plane_x = 0.0;
+	g->player.plane_y = 0.0;
+	g->map.grid = NULL;
+	g->map.width = 0;
+	g->map.height = 0;
+	g->map.floor_color = 0;
+	g->map.ceiling_color = 0;
+	g->map.tex_n = NULL;
+	g->map.tex_s = NULL;
+	g->map.tex_w = NULL;
+	g->map.tex_e = NULL;
+}
+
 void	init_parse(t_game *g)
 {
 	g->parse.floor_r = 0;
@@ -8,6 +27,7 @@ void	init_parse(t_game *g)
 	g->parse.ceiling_r = 0;
 	g->parse.ceiling_g = 0;
 	g->parse.ceiling_b = 0;
+	g->parse.player_found = 0;
 	g->parse.c = false;
 	g->parse.f = false;
 	g->parse.no = false;
@@ -17,9 +37,8 @@ void	init_parse(t_game *g)
 	g->parse.map = false;
 	g->parse.file_fd = -1;
 	g->parse.arr_file = NULL;
+	init_player_map(g);
 }
-
-//A FILE JUST CALLED .CUB IS VALID, LIKELY WRONG, BUT DOUBLE CHECK.
 
 int	check_valid_file(char *str, t_parse *parse)
 {

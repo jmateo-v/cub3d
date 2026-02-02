@@ -59,7 +59,10 @@ static void init_textures(t_game *g)
     g->tex_e = mlx_load_png(g->map.tex_e);
     g->tex_d = mlx_load_png("textures/door.png");
     if (!g->tex_n || !g->tex_s || !g->tex_w || !g->tex_e || !g->tex_d)
+	{
+		cleanup(g);
         error_exit(ERR_TEXTURE_INIT);
+	}
 }
 void    init_game(t_game *g, int argc, char **argv)
 {
