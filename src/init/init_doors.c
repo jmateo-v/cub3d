@@ -6,21 +6,21 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:03:35 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/01/19 19:53:54 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/03 11:11:19 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int count_doors(t_game *g)
+static int	count_doors(t_game *g)
 {
-	int x;
-	int y;
-	int count;
+	int	x;
+	int	y;
+	int	count;
 
 	count = 0;
 	y = 0;
-	while(y < g->map.height && g->map.grid[y])
+	while (y < g->map.height && g->map.grid[y])
 	{
 		x = 0;
 		while (x < g->map.width && g->map.grid[y][x])
@@ -33,37 +33,36 @@ static int count_doors(t_game *g)
 	}
 	return (count);
 }
-static void fill_doors(t_game *g)
-{
-    int x;
-    int y;
-    
-    y = 0;
-    while (y < g->map.height && g->map.grid[y])
-    {
-        x = 0;
-        while (x < g->map.width && g->map.grid[y][x])
-        {
-            if (g->map.grid[y][x] == 'D')
-            {
-                g->doors[g->n_doors].x = x;
-                g->doors[g->n_doors].y = y;
-                g->doors[g->n_doors].open = false;
-                g->doors[g->n_doors].prog = 0.0f;
-                g->doors[g->n_doors].speed = DOOR_SPEED;
 
-                ++g->n_doors;
-            }
-            x++;
-        }
-        y++;
-    }
+static void	fill_doors(t_game *g)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < g->map.height && g->map.grid[y])
+	{
+		x = 0;
+		while (x < g->map.width && g->map.grid[y][x])
+		{
+			if (g->map.grid[y][x] == 'D')
+			{
+				g->doors[g->n_doors].x = x;
+				g->doors[g->n_doors].y = y;
+				g->doors[g->n_doors].open = false;
+				g->doors[g->n_doors].prog = 0.0f;
+				g->doors[g->n_doors].speed = DOOR_SPEED;
+				++g->n_doors;
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
-
-void init_doors(t_game *g)
+void	init_doors(t_game *g)
 {
-	int count;
+	int	count;
 
 	count = count_doors(g);
 	if (count == 0)
@@ -72,7 +71,7 @@ void init_doors(t_game *g)
 		g->n_doors = 0;
 		return ;
 	}
-	g->doors = malloc(sizeof *g->doors * count);
+	g->doors = malloc(sizeof * g->doors * count);
 	if (!g->doors)
 		error_exit(ERR_DOOR_MALLOC);
 	g->n_doors = 0;

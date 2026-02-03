@@ -6,15 +6,15 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:26:00 by dogs              #+#    #+#             */
-/*   Updated: 2026/01/06 18:30:22 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/03 11:34:46 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void error_exit(const char *msg)
+void	error_exit(const char *msg)
 {
-    ft_putstr_fd(msg, 2);
-    ft_putstr_fd("\n", 2);
-    exit(EXIT_FAILURE);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	exit(EXIT_FAILURE);
 }

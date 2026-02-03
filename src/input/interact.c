@@ -6,30 +6,32 @@
 /*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:44:23 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/01/19 19:50:27 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/03 11:16:26 by dogs             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-static float get_d_vector(t_game *g, int index)
+
+static float	get_d_vector(t_game *g, int index)
 {
-	float px;
-	float py;
-	float dx;
-	float dy;
+	float	px;
+	float	py;
+	float	dx;
+	float	dy;
 
 	px = (float)g->player.x;
 	py = (float)g->player.y;
 	dx = (g->doors[index].x + 0.5f) - px;
 	dy = (g->doors[index].y + 0.5f) - py;
-	return (dx*dx + dy*dy);
+	return (dx * dx + dy * dy);
 }
-void interact(t_game *g)
+
+void	interact(t_game *g)
 {
-	int best;
-	float best_d_vector;
-	int i;
-	float d_vector;
+	int		best;
+	float	best_d_vector;
+	int		i;
+	float	d_vector;
 
 	if (!g || g->n_doors <= 0)
 		return ;

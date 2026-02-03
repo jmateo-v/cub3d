@@ -40,6 +40,7 @@ SRC = src/main.c\
 	src/render/raycaster/ray_draw.c\
 	src/render/minimap.c\
 	src/render/sprite.c\
+	src/render/rs_helpers.c\
 	src/render/render_sprite.c\
 	src/utils/error_handler.c\
 	src/utils/col_utils.c\
