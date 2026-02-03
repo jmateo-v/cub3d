@@ -1,6 +1,6 @@
-NO ./textures/placeholder.png
-SO ./textures/placeholder_S.png
-EA ./textures/placeholder_E.png
+NO ./textures/brick_w.png
+SO ./textures/wood_plank_w.png
+EA ./textures/ice_w.png
 
 F 255,0,0
 C 255,255,255

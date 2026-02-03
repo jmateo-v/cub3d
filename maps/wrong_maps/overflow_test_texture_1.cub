@@ -1,6 +1,6 @@
-NO ./textures/placeholder.png
-SO ./textures/placeholder_S.png
-WE ./textures/placeholder_W.png
+NO ./textures/brick_w.png
+SO ./textures/wood_plank_w.png
+WE ./textures/futuristic_w.png
 	EA
 
 F 255,0,0

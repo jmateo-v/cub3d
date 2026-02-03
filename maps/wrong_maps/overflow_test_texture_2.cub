@@ -1,5 +1,5 @@
-NO ./textures/placeholder.png
-SO ./textures/placeholder_S.png
+NO ./textures/brick_w.png
+SO ./textures/wood_plank_w.png
 W
 	EA
 
