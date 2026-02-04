@@ -1,0 +1,18 @@
+NO ./textures/brick_w.png
+SO ./textures/wood_plank_w.png
+WE ./textures/futuristic_w.png
+EA ./textures/ice_w.png
+
+F 255,0,0
+C 255,255,255
+
+1111111111
+1000000001
+1010000101
+101N000D01
+1000000101
+1000000001
+1010000101
+10011D1001
+1000000001
+111111110

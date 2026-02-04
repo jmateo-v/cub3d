@@ -44,9 +44,18 @@ int	check_valid_file(char *str, t_parse *parse)
 {
 	char	*tmp;
 
-	if (!str)
+	if (!str || !str[0])
 		return (-1);
+	tmp = ft_strrchr(str, '/');
+	if (tmp)
+	{
+		tmp++;
+		if (*tmp == '.')
+			return (-1);
+	}
 	tmp = str;
+	if (*tmp == '.')
+		return (-1);
 	while (*tmp && *tmp != '.')
 		++tmp;
 	if (*tmp != '.')
@@ -91,5 +100,5 @@ void	initial_parsing(t_game *g, int argc, char **argv)
 	if (check_valid_file(argv[1], &g->parse) == -1)
 		error_exit(ERR_VALID_FILE);
 	if (copy_file(&g->parse) == -1)
-		error_exit("Error: inside copy_file");
+		error_exit(ERR_FILE_MALLOC);
 }

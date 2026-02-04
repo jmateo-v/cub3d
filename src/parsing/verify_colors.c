@@ -35,13 +35,13 @@ void	obtain_floor_colors(t_game *g, char *line, int *i)
 			break ;
 		else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
 			error_exit(ERR_VALID_COLOR);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
 		start = *i;
 		while (line[*i] && line[*i] != ',')
 		{
-			if (found < 2 && !ft_isdigit(line[*i]) && line[*i] != '+')
-				error_exit(ERR_VALID_COLOR);
-			else if (found == 2 && !ft_isdigit(line[*i])
-				&& line[*i] != '+' && !ft_isspace(line[*i]))
+			if (!ft_isdigit(line[*i]) && line[*i] != '+'
+				&& !ft_isspace(line[*i]))
 				error_exit(ERR_VALID_COLOR);
 			(*i)++;
 		}
@@ -64,13 +64,13 @@ void	obtain_ceiling_colors(t_game *g, char *line, int *i)
 			break ;
 		else if (line[*i] == ',' || (found >= 3 && line[*i] != '\0'))
 			error_exit(ERR_VALID_COLOR);
+		while (line[*i] && ft_isspace(line[*i]))
+			(*i)++;
 		start = *i;
 		while (line[*i] && line[*i] != ',')
 		{
-			if (found < 2 && !ft_isdigit(line[*i]) && line[*i] != '+')
-				error_exit(ERR_VALID_COLOR);
-			else if (found == 2 && !ft_isdigit(line[*i])
-				&& line[*i] != '+' && !ft_isspace(line[*i]))
+			if (!ft_isdigit(line[*i]) && line[*i] != '+'
+				&& !ft_isspace(line[*i]))
 				error_exit(ERR_VALID_COLOR);
 			(*i)++;
 		}

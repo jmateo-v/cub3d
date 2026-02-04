@@ -49,6 +49,7 @@
 # define ERR_SPRITE_MALLOC "Error: malloc failed at init_sprites"
 # define ERR_ARG_COUNT "Error: input only one argument (the map)"
 # define ERR_VALID_FILE "Error: map must end in .cub and be accessible"
+# define ERR_FILE_MALLOC "Error: malloc failed at copy_file"
 # define ERR_VALID_CHARS "Error: invalid chars detected in file"
 # define ERR_NO_TEXTURE "Error: empty or duplicated texture"
 # define ERR_TEXTURE_MALLOC "Error: malloc failed saving textures"
