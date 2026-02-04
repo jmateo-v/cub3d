@@ -48,7 +48,7 @@ SRC = src/main.c\
 	src/utils/cleanup.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-NAME = cub3d
+NAME = cub3D
 
 all: $(LIBFT) $(MLX_LIB) $(NAME) 
 
