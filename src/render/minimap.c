@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:02:27 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/02/03 11:42:24 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/04 16:52:28 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,29 @@ static void	draw_player(t_game *g)
 	draw_small_square(g, px - 2, py - 2, PLAYER_COLOR);
 }
 
+static void	handle_tile(t_game *g, int x, int y)
+{
+	char	c;
+	int		px;
+	int		py;
+
+	c = g->map.grid[y][x];
+	px = x * MM_SCALE;
+	py = y * MM_SCALE;
+	if (c == '1')
+		draw_square(g, px, py, MM_WALL);
+	else if (c == ' ')
+		return ;
+	else if (c == 'D')
+		draw_square(g, px, py, MM_DOOR);
+	else
+	{
+		draw_square(g, px, py, MM_FLOOR);
+		if (c == 'X')
+			draw_small_square(g, px, py, MM_ENEMY);
+	}
+}
+
 void	draw_minimap(t_game *g)
 {
 	int	x;
@@ -69,16 +92,7 @@ void	draw_minimap(t_game *g)
 		x = 0;
 		while (x < g->map.width && g->map.grid[y][x])
 		{
-			if (g->map.grid[y][x] == '1')
-				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_WALL);
-			else if (g->map.grid[y][x] == 'D')
-				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_DOOR);
-			else
-			{
-				draw_square(g, x * MM_SCALE, y * MM_SCALE, MM_FLOOR);
-				if (g->map.grid[y][x] == 'X')
-					draw_small_square(g, x * MM_SCALE, y * MM_SCALE, MM_ENEMY);
-			}
+			handle_tile(g, x, y);
 			x++;
 		}
 		y++;
