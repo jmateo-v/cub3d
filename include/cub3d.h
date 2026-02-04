@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:06:04 by dogs              #+#    #+#             */
-/*   Updated: 2026/02/03 12:18:50 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/04 14:26:41 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <stdint.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <float.h>
 # include "libft.h"
 # include "get_next_line.h"
 # include "MLX42.h"
 # include <math.h>
 # include <fcntl.h>
+# include <limits.h>
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -38,6 +38,7 @@
 # define DOOR_SPEED 4.5f
 # define INTERACT_REACH 2.25f
 # define DELTA_TIME 0.016f
+# define BIG_FLT 1e30f 
 
 // ERROR MESSAGES
 

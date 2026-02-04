@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interact.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:44:23 by jmateo-v          #+#    #+#             */
-/*   Updated: 2026/02/03 11:16:26 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/04 14:27:05 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	interact(t_game *g)
 	if (!g || g->n_doors <= 0)
 		return ;
 	best = -1;
-	best_d_vector = FLT_MAX;
+	best_d_vector = BIG_FLT;
 	i = 0;
 	while (i < g->n_doors)
 	{
