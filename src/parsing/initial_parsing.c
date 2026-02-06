@@ -56,21 +56,11 @@ int	check_valid_file(char *str, t_parse *parse)
 {
 	char	*tmp;
 
+	tmp = NULL;
 	if (!str || !str[0])
 		return (-1);
-	tmp = ft_strrchr(str, '/');
-	if (tmp)
-	{
-		tmp++;
-		if (*tmp == '.')
-			return (-1);
-	}
-	tmp = str;
-	if (*tmp == '.')
-		return (-1);
-	while (*tmp && *tmp != '.')
-		++tmp;
-	if (*tmp != '.')
+	tmp = ft_strrchr(str, '.');
+	if (!tmp || !*tmp)
 		return (-1);
 	if (ft_strncmp(tmp, ".cub", 4) || (ft_strlen(tmp) != 4))
 		return (-1);
