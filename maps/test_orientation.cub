@@ -1,0 +1,18 @@
+NO ./textures/sponge_w.png
+SO ./textures/sponge_w.png
+WE ./textures/sponge_w.png
+EA ./textures/sponge_w.png
+
+F 255,0,0
+C 255,255,255
+
+1111111111
+1000000001
+101D100101
+10DND00D01
+101D100101
+1000000001
+1010000101
+10011D1001
+1000000001
+1111111111

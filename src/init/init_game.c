@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:12:12 by dogs              #+#    #+#             */
-/*   Updated: 2026/02/03 11:09:40 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/11 15:12:00 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_mlx(t_game *g)
 {
-	g->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
+	g->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!g->mlx)
 		error_exit(ERR_MLX_INIT);
 }

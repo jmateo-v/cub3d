@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogs <dogs@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmateo-v <jmateo-v@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:19:25 by dogs              #+#    #+#             */
-/*   Updated: 2026/02/03 12:06:46 by dogs             ###   ########.fr       */
+/*   Updated: 2026/02/11 15:34:46 by jmateo-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,19 @@ static mlx_texture_t	*get_tex(t_game *g)
 static int	get_tex_x(t_game *g, mlx_texture_t *tex)
 {
 	double	wall_x;
+	int		tex_x;
 
 	if (g->ray.side == 0)
 		wall_x = g->player.y + g->ray.perp_wall_dist * g->ray.dir_y;
 	else
 		wall_x = g->player.x + g->ray.perp_wall_dist * g->ray.dir_x;
 	wall_x -= floor(wall_x);
-	return ((int)(wall_x * tex->width));
+	tex_x = (int)(wall_x * tex->width);
+	if (g->ray.side == 0 && g->ray.dir_x > 0)
+		tex_x = tex->width - tex_x - 1;
+	if (g->ray.side == 1 && g->ray.dir_y < 0)
+		tex_x = tex->width - tex_x - 1;
+	return (tex_x);
 }
 
 static void	draw_tex_column(t_game *g, mlx_texture_t *tex, int x, t_slice *s)
